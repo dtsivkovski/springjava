@@ -11,14 +11,14 @@
 <th:block layout:fragment="body" th:remove="tag">
   <!-- Start of body content specific to page -->
   <div class="px-4 py-5 my-5">
-    <h3 class="display-5 fw-bold">Type a Greeting</h3>
+    <h3 class="display-5 fw-bold">Please enter two integers: </h3>
 
     <form action="/greet" method="GET" id="greetForm">
       <div>
-        <label for="greetField">To whom?</label>
-        <input name="name" id="greetField">
+        <input name="num1" id="greetField">
+        <input name="num2" id="greetField">
         <button>Greetings!</button>
-        <p th:text="'Greetings, ' + ${name} + '!'"></p>
+        <p th:text="'The sum for ' + ${num1} + ' and ' + ${num2} + ' is: ' + ${sum}"></p>
       </div>
     </form>
   </div>
