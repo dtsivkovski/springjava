@@ -51,6 +51,10 @@ class Year {
     return ( "{ \"month\": "  + month +  ", " + "\"day\": "  + day + ", " +  "\"year\": "  +this.year+  ", " + "\"dayOfYear\": "  + APCalendar.dayOfYear(month, day, year)+ " }" );
    }
 
+   public String numLeapYearToString(int year1, int year2) {
+      return ( "{ \"year1\": "  + year1 +  ", " + "\"year2\": "  + year2 + ", " +  "\"numberOfLeapYears\": "  + APCalendar.numberOfLeapYears(year1, year2)+ " }" );
+   }
+
    /* standard toString placeholder until class is extended */
    public String toString() { 
       return ( "{ \"year\": "  +this.year+  ", " + "\"firstDayOfYear\": "  +this.firstDayOfYear+   ", " + "\"firstDayOfYear\": "  +this.firstDayOfYear+ " }" ); 

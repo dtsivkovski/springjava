@@ -55,9 +55,17 @@ public class APCalendar {
      * Precondition: 0 <= year1 <= year2
     */ 
     public static int numberOfLeapYears(int year1, int year2) {
-         // to be implemented in part (a)
+        // initializes leapYearCount as 0
+        int leapYearCount = 0;
 
-        return 0;
+        // iterates through every year to find 
+        for (int i = year1; i <= year2; i++) {
+            if (isLeapYear(i)) {
+                leapYearCount++;
+            }
+        }
+
+        return leapYearCount;
         }
 
     /** Returns the value representing the day of the week for the given date
