@@ -55,6 +55,10 @@ class Year {
       return ( "{ \"year1\": "  + year1 +  ", " + "\"year2\": "  + year2 + ", " +  "\"numberOfLeapYears\": "  + APCalendar.numberOfLeapYears(year1, year2)+ " }" );
    }
 
+   public String dayOfWeekToString(int month, int day, int year) {
+      return ( "{ \"month\": "  + month +  ", " + "\"day\": "  + day + ", " +  "\"year\": "  + year +  ", " + "\"dayOfWeek\": "  + APCalendar.dayOfWeek(month, day, year)+ " }" );
+   }
+
    /* standard toString placeholder until class is extended */
    public String toString() { 
       return ( "{ \"year\": "  +this.year+  ", " + "\"firstDayOfYear\": "  +this.firstDayOfYear+   ", " + "\"firstDayOfYear\": "  +this.firstDayOfYear+ " }" ); 
