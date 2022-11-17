@@ -58,7 +58,7 @@ public class APCalendar {
         // initializes leapYearCount as 0
         int leapYearCount = 0;
 
-        // iterates through every year to find 
+        // iterates through every year to find if it is a leap year
         for (int i = year1; i <= year2; i++) {
             if (isLeapYear(i)) {
                 leapYearCount++;
