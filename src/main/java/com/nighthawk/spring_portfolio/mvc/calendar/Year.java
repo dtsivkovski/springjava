@@ -47,6 +47,9 @@ class Year {
     return ( "{ \"year\": "  +this.year+  ", " + "\"firstDayOfYear\": "  +this.firstDayOfYear+ " }" );
    }
 
+   public String dayOfYearToString(int month, int day, int year) {
+    return ( "{ \"month\": "  + month +  ", " + "\"day\": "  + day + ", " +  "\"year\": "  +this.year+  ", " + "\"dayOfYear\": "  + APCalendar.dayOfYear(month, day, year)+ " }" );
+   }
 
    /* standard toString placeholder until class is extended */
    public String toString() { 

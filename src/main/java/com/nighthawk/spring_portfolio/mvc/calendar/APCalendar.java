@@ -1,5 +1,6 @@
 package com.nighthawk.spring_portfolio.mvc.calendar;
 import java.util.*;
+import java.time.YearMonth;
 // Prototype Implementation
 
 public class APCalendar {
@@ -37,10 +38,17 @@ public class APCalendar {
      * dayOfYear(3, 1, 2017) returns 60, since 2017 is not a leap year
      * dayOfYear(3, 1, 2016) returns 61, since 2016 is a leap year. 
     */ 
-    private static int dayOfYear(int month, int day, int year) {
-        // implementation not shown
-
-        return 1;
+    public static int dayOfYear(int month, int day, int year) {
+        // initializes dayValue as 0
+        int dayVal = 0;
+        for (int i = 1; i < month; i++) {
+            // Creates a yearmonth object for each month in the year
+            int monthDays = YearMonth.of(year, i).lengthOfMonth();
+            dayVal += monthDays;
+        }
+        //Adds the day of the incomplete month to dayVal
+        dayVal += day;
+        return dayVal;
         }
 
     /** Returns the number of leap years between year1 and year2, inclusive.
