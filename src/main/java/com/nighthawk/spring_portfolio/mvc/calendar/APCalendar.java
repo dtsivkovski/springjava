@@ -73,14 +73,14 @@ public class APCalendar {
     */
     public static int dayOfWeek(int month, int day, int year) { 
         //initializes date object, gets day value of that week of initialized date
-
-        //Testing using calendar class
-        // Month must be passed in as -1 because it is 0 indexed
         Date date = new Date(year, month - 1, day);
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        // Returns day of week as int, 0 = Sunday, 1 = Monday, etc.
-        return cal.get(Calendar.DAY_OF_WEEK) - 1;
+        // fix for date.getDay being inacurate to the format we originally had, requires if statement
+        if (date.getDay() == 0) {
+            return 6;
+        }
+        else {
+            return date.getDay() - 1;
+        }
         }
 
 
