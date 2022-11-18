@@ -26,7 +26,7 @@ public class APCalendar {
      * firstDayOfYear(2019) returns 2 for Tuesday.
     */
     public static int firstDayOfYear(int year) {
-        // implementation not shown
+        // Gets date object of 1/1/year, date object returns day value for the first day of the year
         Date date = new Date(year, 0, 0);
         return date.getDay();
         }
