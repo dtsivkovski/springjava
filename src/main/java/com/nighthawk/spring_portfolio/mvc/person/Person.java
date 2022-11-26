@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.GregorianCalendar;
-import java.text.SimpleDateFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -98,9 +97,14 @@ public class Person {
 
     // main class as a tester
     public static void main(String[] args) {
+        // Person empty object
         Person p1 = new Person();
+
+        // using gregorian calendar to initialize tester date object
         Date dob2 = new GregorianCalendar(2005, 3, 4).getTime();
         Person p2 = new Person("johnny@gmail.com", "123johnny", "Johnny Coder", dob2);
+        
+        
         System.out.println(p1);
         System.out.println(p2);
      }
