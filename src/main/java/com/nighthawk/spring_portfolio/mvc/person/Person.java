@@ -1,8 +1,10 @@
 package com.nighthawk.spring_portfolio.mvc.person;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -77,6 +79,9 @@ public class Person {
     @Type(type="json")
     @Column(columnDefinition = "jsonb")
     private Map<String,Map<String, Object>> stats = new HashMap<>(); 
+
+    // ArrayList of stats
+    private ArrayList<Map<String,Map<String, Object>>> statArray = new ArrayList<Map<String,Map<String, Object>>>();
     
 
     // Constructor used when building object from an API

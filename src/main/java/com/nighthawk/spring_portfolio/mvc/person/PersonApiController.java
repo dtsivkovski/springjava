@@ -115,7 +115,13 @@ public class PersonApiController {
             // Set Date and Attributes to SQL HashMap
             Map<String, Map<String, Object>> date_map = new HashMap<>();
             date_map.put( (String) stat_map.get("date"), attributeMap );
-            person.setStats(date_map);  // BUG, needs to be customized to replace if existing or append if new
+            person.setStats(date_map);  
+
+            // Set stat array to array with appended hashmap
+            ArrayList<Map<String,Map<String, Object>>> combArray = person.getStatArray();
+            combArray.add(date_map);
+            person.setStatArray(combArray);
+
             repository.save(person);  // conclude by writing the stats updates
 
             // return Person with update Stats
