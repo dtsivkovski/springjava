@@ -205,7 +205,8 @@ public class Calculator {
                 switch (token) {
                     // b goes first, as it is popped second and must be on the left to make the equation work
                     case "RT":
-                        result = Math.pow(b, (1/a));
+                        // rt is the only exception as the first value is the value of the root being done to the second value
+                        result = Math.pow(a, (1/b));
                         break;
                     case "+":
                         result = b + a;
