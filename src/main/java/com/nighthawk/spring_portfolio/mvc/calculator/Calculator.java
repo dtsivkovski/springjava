@@ -162,7 +162,18 @@ public class Calculator {
                     // Added a g value to represent earth's gravitational force
                     this.reverse_polish.add("9.8");
                     break;
-                default:    // Default should be a number, there could be test here
+                default: 
+                    try
+                    {
+                        Double.parseDouble(token);
+                    }
+                    catch(NumberFormatException e)
+                    {
+                        // Resolve variable to 0 in order for the rest of the function to successfully run.
+                        this.reverse_polish.add("0");
+                        this.expression = "Error with parsing your expression \"" + this.expression + "\". Please enter valid numbers, operators, or variables and try again.";
+                        break;
+                    }
                     this.reverse_polish.add(token);
             }
         }
