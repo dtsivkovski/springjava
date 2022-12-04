@@ -16,7 +16,7 @@ import java.lang.Math;
      */
 public class Calculator {
     // Key instance variables
-    private final String expression;
+    private String expression;
     private ArrayList<String> tokens;
     private ArrayList<String> reverse_polish;
     private Double result = 0.0;
