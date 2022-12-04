@@ -26,6 +26,7 @@ public class Calculator {
     {
         // Map<"token", precedence>
         OPERATORS.put("RT", 1);
+        OPERATORS.put("POW", 2);
         OPERATORS.put("^", 2);
         OPERATORS.put("*", 3);
         OPERATORS.put("/", 3);
@@ -137,6 +138,7 @@ public class Calculator {
                 case "/":
                 case "%":
                 case "^":
+                case "POW":
                     // While stack
                     // not empty AND stack top element
                     // and is an operator
@@ -224,6 +226,8 @@ public class Calculator {
                         result = b % a;
                         break;
                     case "^":
+                    // had to implement POW because the ^ threw an error (likely due to something within the api method)
+                    case "POW":
                         // Using Math.pow() function because it supports doubles
                         result = Math.pow(b,a);
                         break;
