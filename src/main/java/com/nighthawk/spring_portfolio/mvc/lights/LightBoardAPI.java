@@ -6,7 +6,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.*;
 
@@ -15,9 +18,15 @@ import java.util.*;
 public class LightBoardAPI {
 
     @GetMapping("/generate/{rows}/{cols}")
-    public ResponseEntity<LightBoard> generateLightBoard(@PathVariable int rows, @PathVariable int cols) {
+    public ResponseEntity<JsonNode> generateLightBoard(@PathVariable int rows, @PathVariable int cols) throws JsonMappingException, JsonProcessingException {
         LightBoard lightBoard = new LightBoard(rows, cols);
-        return new ResponseEntity<>(lightBoard, HttpStatus.OK);
+
+        // Create objectmapper to convert String to JSON
+        ObjectMapper mapper = new ObjectMapper(); 
+        JsonNode json = mapper.readTree(lightBoard.toString()); 
+
+        return ResponseEntity.ok(json);
+
     }
     
 }

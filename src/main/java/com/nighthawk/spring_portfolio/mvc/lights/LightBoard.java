@@ -52,6 +52,8 @@ public class LightBoard {
                 lights[row][col].getEffect() + "m" +
                 // data, extract custom getters
                 "{" +
+                "\"" + "isOn\": " + lights[row][col].isOn() +
+                "," +
                 "\"" + "RGB\": " + "\"" + lights[row][col].getRGB() + "\"" +
                 "," +
                 "\"" + "Effect\": " + "\"" + lights[row][col].getEffectTitle() + "\"" +
@@ -82,6 +84,7 @@ public class LightBoard {
                     // repeat each column for block size
                     for (int j = 0; j < COLS; j++) {
                         // print single character, except at midpoint print color code
+                        if (lights[row][col].isOn()) {
                         String c = (i == (int) (ROWS / 2) && j == (int) (COLS / 2) ) 
                             ? lights[row][col].getRGB()
                             : (j == (int) (COLS / 2))  // nested ternary
@@ -104,6 +107,7 @@ public class LightBoard {
 
                         // reset
                         "\033[m";
+                        }
                     }
                 }
                 outString += "\n";
