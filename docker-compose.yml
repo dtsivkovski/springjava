@@ -1,10 +1,10 @@
 version: '3'
 services:
   web:
-    image: java_springv1
+    image: java_springv1_8679
     build: .
     ports:
-      - "8085:8080"
+      - "8679:8679"
     volumes:
       - persistent_volume:/app/volumes
 volumes:
@@ -13,4 +13,4 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /home/ubuntu/spring_portfolio/volumes
+      device: /home/ubuntu/T8679_springjava/volumes
