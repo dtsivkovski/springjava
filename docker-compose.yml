@@ -2,7 +2,7 @@ version: '3'
 services:
   web:
     image: java_springv1_8679
-    command: --restart=on-failure
+    restart: on-failure
     build: .
     ports:
       - "8679:8679"
