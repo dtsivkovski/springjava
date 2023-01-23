@@ -4,11 +4,33 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
+
+@Data  // Annotations to simplify writing code (ie constructors, setters)
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 public class PhysObject {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
     private int userID;
     private double mass;
     private double recentKE;
     private double recentPE;
+
+    // Hashmap with type and result for history of calculations on the object
+    @ElementCollection
+    @MapKeyColumn(name = "type")
+    @Column(name = "result")
+    @JsonIgnore
     private Map<String, Double> history = new HashMap<String, Double>();
 
     // Initializes object with mass and userID
