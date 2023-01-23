@@ -19,14 +19,14 @@ public class PersonApiController {
 
     // Autowired enables Control to connect POJO Object through JPA
     @Autowired
-    private PersonJpaRepository repository;
+    private ModelRepository repository;
 
     /*
     GET List of People
      */
-    @GetMapping("/")
+    @GetMapping("/all")
     public ResponseEntity<List<Person>> getPeople() {
-        return new ResponseEntity<>( repository.findAllByOrderByNameAsc(), HttpStatus.OK);
+        return new ResponseEntity<>( repository.listAll(), HttpStatus.OK);
     }
 
     /*
@@ -34,28 +34,16 @@ public class PersonApiController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Person> getPerson(@PathVariable long id) {
-        Optional<Person> optional = repository.findById(id);
-        if (optional.isPresent()) {  // Good ID
-            Person person = optional.get();  // value from findByID
-            return new ResponseEntity<>(person, HttpStatus.OK);  // OK HTTP response: status code, headers, and body
-        }
-        // Bad ID
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);       
+        return new ResponseEntity<>( repository.get(id), HttpStatus.OK);
     }
 
     /*
     DELETE individual Person using ID
      */
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Person> deletePerson(@PathVariable long id) {
-        Optional<Person> optional = repository.findById(id);
-        if (optional.isPresent()) {  // Good ID
-            Person person = optional.get();  // value from findByID
-            repository.deleteById(id);  // value from findByID
-            return new ResponseEntity<>(person, HttpStatus.OK);  // OK HTTP response: status code, headers, and body
-        }
-        // Bad ID
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
+    public ResponseEntity<Object> deletePerson(@PathVariable long id) {
+        repository.delete(id);
+        return new ResponseEntity<>( ""+ id +" deleted", HttpStatus.OK);
     }
 
     /*
@@ -73,7 +61,7 @@ public class PersonApiController {
             return new ResponseEntity<>(dobString +" error; try MM-dd-yyyy", HttpStatus.BAD_REQUEST);
         }
         // A person object WITHOUT ID will create a new record with default roles as student
-        Person person = new Person(email, password, name, dob);
+        Person person = new Person(email, password, name, dob, repository.findRole("ROLE_STUDENT") );
         repository.save(person);
         return new ResponseEntity<>(email +" is created successfully", HttpStatus.CREATED);
     }
@@ -86,8 +74,8 @@ public class PersonApiController {
         // extract term from RequestEntity
         String term = (String) map.get("term");
 
-        // JPA query to filter on term
-        List<Person> list = repository.findByNameContainingIgnoreCaseOrEmailContainingIgnoreCase(term, term);
+        // custom JPA query to filter on term
+        List<Person> list = repository.listLikeNative(term);
 
         // return resulting list and status, error checking should be added
         return new ResponseEntity<>(list, HttpStatus.OK);
@@ -96,6 +84,7 @@ public class PersonApiController {
     /*
     The personStats API adds stats by Date to Person table 
     */
+    /*
     @PostMapping(value = "/setStats", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Person> personStats(@RequestBody final Map<String,Object> stat_map) {
         // find ID
@@ -130,6 +119,6 @@ public class PersonApiController {
         // return Bad ID
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
         
-    }
+    }*/
 
 }

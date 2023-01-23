@@ -9,14 +9,14 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.nighthawk</groupId>
-    <artifactId>spring</artifactId>
+    <artifactId>csa</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>spring</name>
-    <description>Intro project for Spring Boot</description>
+    <name>csa</name>
+    <description>CSA project for Spring Boot</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <!-- Thymeleaf 3 -->
-        <org.thymeleaf-version>3.0.15.RELEASE</org.thymeleaf-version>
+        <org.thymeleaf-version>3.0.12.RELEASE</org.thymeleaf-version>
         <org.thymeleaf.extras.springsecurity4-version>3.0.2.RELEASE</org.thymeleaf.extras.springsecurity4-version>
         <nz.net.ultraq.thymeleaflayout-version>2.3.0</nz.net.ultraq.thymeleaflayout-version>
         <thymeleaf-extras-java8time-version>3.0.1.RELEASE</thymeleaf-extras-java8time-version>
@@ -64,6 +64,13 @@
             <artifactId>thymeleaf-spring5</artifactId>
             <!-- TODO Remove once available in platform BOM -->
             <version>${org.thymeleaf-version}</version>
+            <!-- Avoid org.hibernate.jpa.boot.archive.spi.ArchiveException: Could not build ClassFile in Java 8 -->
+            <exclusions>
+                <exclusion>
+                    <artifactId>javassist</artifactId>
+                    <groupId>org.javassist</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
@@ -96,6 +103,11 @@
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.11.1</version>
+        </dependency>
+        <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.30.1</version>
@@ -111,14 +123,48 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
             <version>1.1.1</version>
         </dependency>
         <dependency>
-            <groupId>com.vladmihalcea</groupId>
-            <artifactId>hibernate-types-52</artifactId>
-            <version>2.20.0</version>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-crypto</artifactId>
+            <version>5.6.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>5.6.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.18.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>5.6.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.commonmark</groupId>
+            <artifactId>commonmark</artifactId>
+            <version>0.17.2</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.4</version>
         </dependency>
     </dependencies>
 
