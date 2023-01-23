@@ -2,8 +2,6 @@ package com.nighthawk.spring_portfolio.mvc.physics;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +9,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
 
 @Data  // Annotations to simplify writing code (ie constructors, setters)
 @NoArgsConstructor
