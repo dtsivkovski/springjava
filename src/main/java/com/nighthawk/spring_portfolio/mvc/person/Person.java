@@ -82,15 +82,14 @@ public class Person {
     // }
 
     // main class as a tester
-    public static void main(String[] args) {
-        // Person empty object
-        Person p1 = new Person();
-        Role role = new Role("USER");
-        Person p2 = new Person("johnny@gmail.com", "123johnny", "Johnny Coder");
+    // public static void main(String[] args) {
+    //     // Person empty object
+    //     Person p1 = new Person();
+    //     Person p2 = new Person("johnny@gmail.com", "123johnny", "Johnny Coder", role);
         
         
-        System.out.println(p1);
-        System.out.println(p2);
-     }
+    //     System.out.println(p1);
+    //     System.out.println(p2);
+    //  }
 
 }
