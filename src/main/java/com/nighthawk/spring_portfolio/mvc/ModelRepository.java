@@ -89,8 +89,7 @@ public class ModelRepository implements UserDetailsService {  // "implements" ti
         return (personJpaRepository.findByEmail(email));
     }
 
-    public void delete(long id) {
-        deleteScrumMember(id);   // make sure ID is no longer present in SCRUM Teams
+    public void delete(long id) {  // make sure ID is no longer present in SCRUM Teams
         personJpaRepository.deleteById(id);
     }
 
