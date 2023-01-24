@@ -1,0 +1,29 @@
+<!-- This page is illustrative and contains ideas about HTML formatting -->
+<!DOCTYPE HTML>
+<!-- Signals to the Layout Dialect which layout should be used to decorate this View -->
+<html xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}" lang="en">
+
+<!-- <head> -->
+<div layout:fragment="head" th:remove="tag">
+    <title>403 Error</title>
+</div>
+
+<!-- <body> -->
+<div layout:fragment="body" th:remove="tag">
+    <div class="index">
+        <div class="center-block" style="margin: 2% 10% 10%; font-family: gilroy,serif;">
+            <div class="col-12" style="text-align: center;">
+                <img th:src="@{/images/nope.jpg}">
+            </div>
+
+            <div class="jumbotron jumbotron-fluid" style="text-align: center; ">
+                <h2>You don't have permission to do that! (Insufficient Role)</h2>
+                <a href="/">Go Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
