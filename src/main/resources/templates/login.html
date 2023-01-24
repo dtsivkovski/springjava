@@ -3,9 +3,16 @@
 <!-- Signals to the Layout Dialect which layout should be used to decorate this View -->
 <html xmlns:layout="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.w3.org/1999/xhtml"
-      lang="en">
+      layout:decorate="~{layout}" lang="en">
 
+<!-- <head> -->
+<div layout:fragment="head" th:remove="tag">
+    <!-- Page specific head additions -->
+    <title>Login</title>
+</div>
 
+<!-- <body> -->
+<div layout:fragment="body" th:remove="tag">
 
     <div class="container py-4">
         <header class="pb-3 mb-4 border-bottom border-primary text-dark">
@@ -39,3 +46,5 @@
         </div>
 
     </div>
+
+</div>
