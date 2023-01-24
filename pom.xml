@@ -14,9 +14,9 @@
     <name>csa</name>
     <description>CSA project for Spring Boot</description>
     <properties>
-        <java.version>17</java.version>
+        <java.version>11</java.version>
         <!-- Thymeleaf 3 -->
-        <org.thymeleaf-version>3.0.12.RELEASE</org.thymeleaf-version>
+        <org.thymeleaf-version>3.0.15.RELEASE</org.thymeleaf-version>
         <org.thymeleaf.extras.springsecurity4-version>3.0.2.RELEASE</org.thymeleaf.extras.springsecurity4-version>
         <nz.net.ultraq.thymeleaflayout-version>2.3.0</nz.net.ultraq.thymeleaflayout-version>
         <thymeleaf-extras-java8time-version>3.0.1.RELEASE</thymeleaf-extras-java8time-version>
