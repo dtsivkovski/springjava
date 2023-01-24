@@ -1,75 +1,103 @@
 <!-- This page is illustrative and contains ideas about HTML formatting -->
 <!DOCTYPE HTML>
 <!-- Signals to the Layout Dialect which layout should be used to decorate this View -->
-<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
-      layout:decorate="~{layouts/base}" lang="en">
+<html xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}" lang="en">
 
-<head>
-    <title>Intro</title>
-</head>
+<!-- <head> -->
+<div layout:fragment="head" th:remove="tag">
+    <!-- Page specific head additions -->
+    <title>Spring Intro</title>
+</div>
 
-<body>
-<th:block layout:fragment="body" th:remove="tag">
-    <!-- Start of body content specific to page -->
-    <div class="px-5 py-5 mx-auto">
-        <h1><strong>Daniel Tsivkovski was here</strong></h1>
-        <div class="row">
-            <div class="col-4">
-                <div class="card">
-                    <img class="card-img-top" th:src="@{/images/java.png}" alt="Java Development" height="250">
-                    <div class="card-body">
-                    <h5 class="card-title">What should Java Developers learn?</h5>
-                    <p class="card-text">
-                        <ol>
-                            <li>Java 11-17 is used for PBL. Java 8 appears to be College Board standard.  Java features like Reactive Streams, HTTP2 client, JShell, React JS are more recent than 8.</li>
-                            <li>GitHub.  Learning to master managing change, branches, pull requests, and more.</li>
-                            <li>Development DevOps. Java programmers should have a passion for managing the environment and learning automation (Git, Maven, Docker).</li>
-                            <li>REST and Microservice using Spring.  Mastering creating and consuming RESTful APIs</li>
-                        </ol>
-                    </p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+<!-- <body> -->
+<div layout:fragment="body" th:remove="tag">
+    <!-- Page specific body additions -->
+    <div class="container py-4">
+        <header class="pb-3 mb-4 border-bottom border-primary">
+            <div class="d-flex align-items-center text-dark text-decoration-none">
+                <span class="fs-4">Home Page</span>
+            </div>
+        </header>
+
+        <div class="container-fluid py-1">
+            <div class="container py-4">
+
+                <div class="mb-4 rounded-3 p-3">
+                    <div class="container-fluid py-2">
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <img alt="" class="d-inline-block align-center"
+                                      src=""
+                                      th:src="@{/images/APCompSciA.webp}"
+                                      height="125px"
+                                      width="auto">
+                            </div>
+
+                            <div class="col-md-9">
+                                <ol>
+                                <li>AP Computer Science A focuses on computing skills related to programming in Java.</li>
+                                <li>Modularity: Modularity in object-oriented programming allows coder to use abstraction to break complex programs down into individual classes and methods.</li>
+                                <li>Variables: Variables create data abstractions, as they can represent a set of possible values or a group of related values.</li>
+                                <li>Control: Doing things in order, making decisions, and doing the same process multiple times are represented in code by using control structures.</li>
+                                <li>Impact of Computing: Computers and computing have revolutionized our lives. To use computing safely and responsibly, we need to be aware of privacy, security, and ethical issues.</li>
+                                </ol>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="container-fluid py-2">
+
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <h3>What should Java Developers learn in addition to the College Board foundations?</h3>
+                            </div>
+
+                            <div class="col-md-9">
+                                <ol>
+                                <li>DevOps. Java programmers should have a passion for managing the environment and learning automation (Linux, Maven, Deployment).</li>
+                                <li>Git/GitHub.  Learning to master change in programming with multiple developers, forks or branches, pull requests.</li>
+                                <li>REST services.   Using frameworks to master sharing data, coders can should create and consume RESTful APIs</li>
+                                <li>Microservices can be an extension of RESTful Web services or other frameworks with the objective being to break up your code into small, distributed, and independent services.</li>
+                                <li>Java 9-18. Java 8 is College Board standard.  Things like Jigsaw, Reactive Streams, APIs, HTTP2 client, JShell, React JS are all more recent advents in Java</li>
+                                </ol>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="container-fluid py-3">
+
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <h3>What is Spring Framework and how will it be used to complement the learning of Java?</h3>
+                            </div>
+
+                            <div class="col-md-9">
+                                <ol>
+                                <li>Spring Framework. Spring Framework is the most popular application development framework of Java. </li>
+                                <li>Spring Boot.  Spring Boot helps to create a stand-alone application with less configuration.</li>
+                                <li>Spring MVC. Spring MVC is a model view control-based web framework within the Spring framework.</li>
+                                <li>Thymeleaf. ThymeLeaf is a server-side Java template engine, it support HTML5 JVM web development, and provides full integration with Spring Framework.</li>
+                                <li>Web Development. Java, Spring, HTML and JavaScript "front-end" and "Fetch" provide Full Stack capabilities (user interfaces with back-end components like databases)</li>
+                                </ol>
+                            </div>
+
+                        </div>
+
                     </div>
                 </div>
             </div>
-            <div class="col-4">
-                <div class="card">
-                    <img class="card-img-top" th:src="@{/images/spring.png}" alt="Spring Development" height="250">
-                    <div class="card-body">
-                    <h5 class="card-title">What is Spring?</h5>
-                    <p class="card-text">
-                        <ol>
-                            <li>Spring Framework is the most popular application development framework of Java. </li>
-                            <li>Spring Boot helps to create a stand-alone application with less configuration.</li>
-                            <li>Spring MVC is a model view controller-based web framework under the Spring framework.</li>
-                            <li>ThymeLeaf is a server-side Java template engine, supports HTML5 JVM web development, and provides full integration with Spring Framework.</li>
-                        </ol>
-                    </p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="card">
-                    <img class="card-img-top" th:src="@{/images/pojo.jpeg}" alt="Java Persistence" height="250">
-                    <div class="card-body">
-                    <h5 class="card-title">How do you create Persistent data?</h5>
-                    <p class="card-text">
-                        <ol>
-                            <li>Java Persistent API (JPA) provides a query language that allows create, read, update, and delete objects from a database.</li>
-                            <li>Beans, Controller Code, and Business logic interact with the JPA to manage data in and out of the Database.</li>
-                            <li>An Object-Relational Model (ORM) mapping Java classes (entities + supporting structures) with a relational database</li>
-                            <li>Plain Old Java Objects (POJO) are the Class definitions that are foundations for JPA and ORM, see the @entity declaration over the Class definition.</li>
-                        </ol>
-                    </p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            
+
         </div>
     </div>
-    <!-- End of body content specific to page -->
-</th:block>
-</body>
+    <!-- End of body upload specific to page -->
+</div>
 
 </html>
