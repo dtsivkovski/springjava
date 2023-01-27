@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.*;
+import java.lang.Boolean;
 
 import static javax.persistence.FetchType.EAGER;
 
@@ -43,6 +44,11 @@ public class Person {
     @NonNull
     @Size(min = 2, max = 30, message = "Name (2 to 30 chars)")
     private String name;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @MapKeyColumn(name = "subject")
+    @Column(name = "interested")
+    private Map<String, Boolean> interests = new HashMap<String, Boolean>();
     
 
     /* HashMap is used to store JSON for daily "stats"
@@ -62,11 +68,18 @@ public class Person {
     
 
     // Constructor used when building object from an API
-    public Person(String email, String password, String name, Role role) {
+    public Person(String email, String password, String name, Role role, boolean intStats, boolean intChem, boolean intPhys, boolean intBio) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.roles.add(role);
+        this.interests = new HashMap<String, Boolean>() {{
+            put("stats", intStats);
+            put("chem", intChem);
+            put("phys", intPhys);
+            put("bio", intBio);
+        }};
+        
     }
 
     // A custom getter to return age from dob attribute
