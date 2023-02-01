@@ -24,10 +24,9 @@ public class PhysObject {
     private double recentPE;
 
     // Hashmap with type and result for history of calculations on the object
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @MapKeyColumn(name = "type")
     @Column(name = "result")
-    @JsonIgnore
     private Map<String, Double> history = new HashMap<String, Double>();
 
     // Initializes object with mass and userID
@@ -43,7 +42,7 @@ public class PhysObject {
 
     // Calculates KE using given vi value, saves it
     public double calculateKE(double vi) {
-        double KE = 0.5 * mass * vi;
+        double KE = 0.5 * mass * (vi * vi);
         recentKE = KE;
         String typeInp = "KE (v = " + vi + ")";
         addCalculation(typeInp, KE);

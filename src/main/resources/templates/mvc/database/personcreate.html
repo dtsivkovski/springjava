@@ -40,6 +40,11 @@
                             https://getbootstrap.com/docs/4.0/components/forms/#readonly-plain-text
                      -->
                     <form class="form-inline" action="#" th:action="@{/database/personcreate}" th:object="${person}" method="POST">
+                        <div class="input-group mb-2 mr-sm-2">
+                            <label for="name">Name:</label>
+                            <input type="text" th:field="*{name}" id="name">
+                            <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</small>
+                        </div>
                         <div class="form-group mb-2 mr-sm-2">
                             <label for="email">Email:</label>
                             <input type="email" th:field="*{email}" id="email">
@@ -49,11 +54,6 @@
                             <label for="password">Password:</label>
                             <input type="password" th:field="*{password}" id="password">
                             <small th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</small>
-                        </div>
-                        <div class="input-group mb-2 mr-sm-2">
-                            <label for="name">Name:</label>
-                            <input type="text" th:field="*{name}" id="name">
-                            <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</small>
                         </div>
                         <button type="submit" class="btn btn-primary">Add</button>
                     </form>
