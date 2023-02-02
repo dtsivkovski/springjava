@@ -44,10 +44,10 @@ public class PhysAPIController {
     @GetMapping("/create/{mass}") 
     public ResponseEntity<List<PhysObject>> createPhysObject(@PathVariable double mass) {
         // Create new object and save to repo
-        String name = getUserName();
-        PhysObject a = new PhysObject(mass, name);
+        String username = getUserName();
+        PhysObject a = new PhysObject(mass, username);
         repository.save(a);
-        return new ResponseEntity<>( repository.findByowner(name), HttpStatus.OK);
+        return new ResponseEntity<>( repository.findByowner(username), HttpStatus.OK);
     }
 
     @GetMapping("/calculateKE/{objectID}/{velocity}")
