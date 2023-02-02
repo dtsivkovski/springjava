@@ -53,8 +53,8 @@ public class PhysAPIController {
     @GetMapping("/calculateKE/{objectID}/{velocity}")
     public ResponseEntity<PhysObject> calculateKE(@PathVariable int objectID, @PathVariable double velocity) {
         PhysObject a = repository.findById(objectID).get();
-        // Check if owner matches
-        if (a.getOwner() != getUserName()) {
+        //Check if owner matches
+        if (!(a.getOwner().equals(getUserName()))) {
             return new ResponseEntity<>(a, HttpStatus.BAD_REQUEST);
         }
         // Calculate KE and save to repo
@@ -67,12 +67,25 @@ public class PhysAPIController {
     public ResponseEntity<PhysObject> calculatePE(@PathVariable int objectID, @PathVariable double g, @PathVariable double h) {
         PhysObject a = repository.findById(objectID).get();
         // Check if owner matches
-        if (a.getOwner() != getUserName()) {
+        if (!(a.getOwner().equals(getUserName()))) {
             return new ResponseEntity<>(a, HttpStatus.BAD_REQUEST);
         }
         // Calculae PE and save to repo
         a.calculatePE(g, h);
         repository.save(a);
         return new ResponseEntity<>( a, HttpStatus.OK);
+    }
+
+    @GetMapping("/scrub/{objectID}")
+    public ResponseEntity<PhysObject> scrub(@PathVariable int objectID) {
+        PhysObject a = repository.findById(objectID).get();
+        // Check if owner matches
+        if (!(a.getOwner().equals(getUserName()))) {
+            return new ResponseEntity<>(a, HttpStatus.BAD_REQUEST);
+        }
+        // Scrub object history and save to repo
+        a.clearHistory();
+        repository.save(a);
+        return new ResponseEntity<>(a, HttpStatus.OK);
     }
 }

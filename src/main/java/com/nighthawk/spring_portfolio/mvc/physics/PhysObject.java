@@ -43,7 +43,7 @@ public class PhysObject {
         double KE = 0.5 * mass * (vi * vi);
         recentKE = KE;
         String typeInp = "KE (v = " + vi + ")";
-        addCalculation(typeInp, KE);
+        history.put(typeInp, KE);
         return KE;
     }
 
@@ -62,6 +62,10 @@ public class PhysObject {
 
     public double getMass() {
         return mass;
+    }
+
+    public void clearHistory() {
+        history.clear();
     }
 
     public static void main(String[] args) {
