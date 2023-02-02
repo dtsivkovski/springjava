@@ -88,4 +88,16 @@ public class PhysAPIController {
         repository.save(a);
         return new ResponseEntity<>(a, HttpStatus.OK);
     }
+
+    @GetMapping("/delete/{objectID}")
+    public ResponseEntity<List<PhysObject>> delete(@PathVariable int objectID) {
+        PhysObject a = repository.findById(objectID).get();
+        // Check if owner matches
+        if (!(a.getOwner().equals(getUserName()))) {
+            return new ResponseEntity<>(repository.findByowner(getUserName()), HttpStatus.BAD_REQUEST);
+        }
+        // Delete object from repo
+        repository.delete(a);
+        return new ResponseEntity<>(repository.findByowner(getUserName()), HttpStatus.OK);
+    }
 }
