@@ -9,5 +9,5 @@ public interface PhysJPA extends JpaRepository<PhysObject, Integer> {
     // JPA has many built in methods, these few have been prototyped for this application
     // void save(PhysObject pobj);
     // List<PhysObject> findAllByOrderByuserIDAsc();
-    List<PhysObject> findByuserID(int userID);
+    List<PhysObject> findByowner(String username);
 }
