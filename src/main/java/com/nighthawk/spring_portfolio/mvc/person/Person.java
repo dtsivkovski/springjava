@@ -68,11 +68,11 @@ public class Person {
     
 
     // Constructor used when building object from an API
-    public Person(String email, String password, String name, Role role, boolean intStats, boolean intChem, boolean intPhys, boolean intBio) {
+    public Person(String email, String password, String name, boolean intStats, boolean intChem, boolean intPhys, boolean intBio) {
         this.email = email;
         this.password = password;
         this.name = name;
-        this.roles.add(role);
+        // this.roles.add(role);
         this.interests = new HashMap<String, Boolean>() {{
             put("stats", intStats);
             put("chem", intChem);
