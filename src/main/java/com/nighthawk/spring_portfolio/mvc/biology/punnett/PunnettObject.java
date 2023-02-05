@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Data  // Annotations to simplify writing code (ie constructors, setters)
 @NoArgsConstructor
@@ -14,17 +15,16 @@ public class PunnettObject {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
     private String owner;
 
     // Allele probabilities
     private double probDominant;
     private double probRecessive;
 
-    @ElementCollection(fetch = FetchType.EAGER)
     private char[] alleles = new char[4];
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private String[] table;
+    private ArrayList<String> genoTable = new ArrayList<String>();
 
     public PunnettObject(char a1, char a2, char b1, char b2, String username) {
         alleles[0] = a1;
@@ -46,11 +46,11 @@ public class PunnettObject {
         String t4 = "" + alleles[1] + alleles[3];
 
         // prepare temp table count for 
-        table = new String[] {t1, t2, t3, t4};
+        String[] tempTable = new String[] {t1, t2, t3, t4};
         probDominant = 0;
 
         // loop through table
-        for (String i : table) {
+        for (String i : tempTable) {
             // assume all recessive for dominance check
             boolean isDom = false;
 
@@ -64,6 +64,9 @@ public class PunnettObject {
             if (isDom) {
                 probDominant += 0.25;
             }
+
+            genoTable.add(i);
+            
         }
         
         // calculate recessive

@@ -46,4 +46,25 @@ public class BiologyAPIController {
         return new ResponseEntity<>( repository.findByowner(username), HttpStatus.OK);
     }
 
+    @GetMapping("/punnett/get/all")
+    public ResponseEntity<List<PunnettObject>> getPunnettObjects() {
+        // Get all objects 
+        String username = getUserName();
+        return new ResponseEntity<>( repository.findByowner(username), HttpStatus.OK);
+    }
+
+    @GetMapping("/punnett/delete/{id}")
+    public ResponseEntity<List<PunnettObject>> deletePunnettObject(@PathVariable int id) {
+        // Delete object by id
+        PunnettObject a = repository.findById(id).get();
+
+        String username = getUserName();
+        
+        if (a.getOwner().equals(username)) {
+            repository.delete(a);
+        }
+        
+        return new ResponseEntity<>( repository.findByowner(username), HttpStatus.OK);
+    }
+
 }
