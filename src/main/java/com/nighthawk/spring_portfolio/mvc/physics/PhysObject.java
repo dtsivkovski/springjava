@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Data  // Annotations to simplify writing code (ie constructors, setters)
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +16,7 @@ public class PhysObject {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private int userID;
+    private String owner;
     private double mass;
     private double recentKE;
     private double recentPE;
@@ -29,10 +27,10 @@ public class PhysObject {
     @Column(name = "result")
     private Map<String, Double> history = new HashMap<String, Double>();
 
-    // Initializes object with mass and userID
-    PhysObject(double m, int uID) {
+    // Initializes object with mass and username
+    PhysObject(double m, String username) {
         mass = m;
-        userID = uID;
+        owner = username;
     }
 
     // Puts calculations in
@@ -45,7 +43,7 @@ public class PhysObject {
         double KE = 0.5 * mass * (vi * vi);
         recentKE = KE;
         String typeInp = "KE (v = " + vi + ")";
-        addCalculation(typeInp, KE);
+        history.put(typeInp, KE);
         return KE;
     }
 
@@ -66,8 +64,12 @@ public class PhysObject {
         return mass;
     }
 
+    public void clearHistory() {
+        history.clear();
+    }
+
     public static void main(String[] args) {
-        PhysObject a = new PhysObject(10, 0);
+        PhysObject a = new PhysObject(10, "dan@mail");
         a.calculateKE(10);
         a.calculatePE(9.8, 10);
         System.out.println("Mass: " + a.getMass());
