@@ -1,28 +1,33 @@
-package com.nighthawk.spring_portfolio.mvc.Chem;
+package com.nighthawk.spring_portfolio.mvc.physics;
 
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
-@RestController
-@RequestMapping("/api/Chem")
+
+
+import java.util.*;
+
+@RestController // annotation to simplify the creation of RESTful web services
+@RequestMapping("/api/physics")
 public class ChemApiController {
-    @WebServlet("/density")
-    public class DensityServlet extends HttpServlet {
-        @Override
-        protected void doPost(HttpServletRequest request, HttpServletResponse response)
-                throws ServletException, IOException {
-            String mass = request.getParameter("mass");
-            String volume = request.getParameter("volume");
-            double density = Double.parseDouble(mass) / (Double.parseDouble(volume) / 1000);
-            request.setAttribute("density", density);
-            request.getRequestDispatcher("densityResult.jsp").forward(request, response);
-        }
-    }
+
+    // Autowired enables Control to connect HTML and POJO Object to database easily for CRUD operations
+    @Autowired
+    private ChemJpa repository;
+
+    
 }
+    
+    /*
+    GET List of physobjects
+     */
+    // @GetMapping("/get/all")
+    // public ResponseEntity<List<PhysObject>> getPhysObjects() {
+    //     // Get all objects 
+    //     return new ResponseEntity<>( repository.findAll(), HttpStatus.OK);
+    // }
