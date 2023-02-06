@@ -21,6 +21,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.*;
 
+
+
 @RestController
 @RequestMapping("/api/Chem")
 public class ChemApiController {
@@ -41,19 +43,16 @@ public class ChemApiController {
         return new ResponseEntity<>( repository.findByowner(getUserName()), HttpStatus.OK);
     }
 
-    @GetMapping("/create/{mass}") 
-    public ResponseEntity<List<ChemObject>> createChemObject(@PathVariable double mass) {
+    @GetMapping("/create/{mass}/{volume}") 
+    public ResponseEntity<List<ChemObject>> createChemObject(@PathVariable double mass, @PathVariable double volume) {
         // Create new object and save to repo
         String username = getUserName();
-        ChemObject a = new ChemObject(mass, username);
+        ChemObject a = new ChemObject(mass, volume, username);
         repository.save(a);
         return new ResponseEntity<>( repository.findByowner(username), HttpStatus.OK);
     }
 
-    @GetMapping("/calDensity/{")
-    {
-        
-    }
+    
     
     
     
