@@ -1,7 +1,6 @@
 package com.nighthawk.spring_portfolio.mvc.jwt;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.rest.RepositoryRestMvcAutoConfiguration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -38,13 +37,14 @@ public class JwtApiController {
     private ModelRepository repository;
 
 	@PostMapping("/authenticate")
-	public ResponseEntity<?> createAuthenticationToken(@RequestBody Person authenticationRequest) throws Exception {
+	public ResponseEntity<Person> createAuthenticationToken(@RequestBody Person authenticationRequest) throws Exception {
 		System.out.println("lol1");
 		authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
 		System.out.println("lol2");
 		final UserDetails userDetails = jwtUserDetailsService
 				.loadUserByUsername(authenticationRequest.getEmail());
 		final String token = jwtTokenUtil.generateToken(userDetails);
+		final Person a = repository.getByEmail(authenticationRequest.getEmail());
 		final ResponseCookie tokenCookie = ResponseCookie.from("jwt", token)
 			.httpOnly(true)
 			.secure(true)
@@ -52,7 +52,7 @@ public class JwtApiController {
 			.maxAge(3600)
 			// .domain("example.com") // Set to backend domain
 			.build();
-		return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, tokenCookie.toString()).build();
+		return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, tokenCookie.toString()).body(a);
 	}
 
 	@PostMapping("/register")
