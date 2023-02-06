@@ -53,6 +53,19 @@ public class BiologyAPIController {
         return new ResponseEntity<>( repository.findByowner(username), HttpStatus.OK);
     }
 
+    @GetMapping("/punnett/get/{id}")
+    public ResponseEntity<PunnettObject> getPunnettById(@PathVariable int id) {
+        PunnettObject a = repository.findById(id).get();
+
+        String username = getUserName();
+
+        if (a.getOwner().equals(username)) {
+            return new ResponseEntity<>(a, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
     @GetMapping("/punnett/delete/{id}")
     public ResponseEntity<List<PunnettObject>> deletePunnettObject(@PathVariable int id) {
         // Delete object by id
