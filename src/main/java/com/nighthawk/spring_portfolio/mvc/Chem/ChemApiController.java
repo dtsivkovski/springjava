@@ -1,4 +1,4 @@
-package com.nighthawk.spring_portfolio.mvc.physics;
+package com.nighthawk.spring_portfolio.mvc.Chem;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
