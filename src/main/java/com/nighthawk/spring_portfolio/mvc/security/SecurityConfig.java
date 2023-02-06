@@ -27,9 +27,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         /* security rules ...
-            ... initial implementation is focused on protecting database information
-            ... "DELETE" is primary concern in authority rules, ADMIN only
-            ... "POST", actions desire STUDENT role
+         *   ... initial implementation is focused on protecting database information
+         *   ... "DELETE" is primary concern in authority rules, ADMIN only
+         *   ... "POST", actions desire STUDENT role
          */
         http
             .authorizeRequests()
