@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 // Calculator api, endpoint: /api/calculator/
 @RestController
 @RequestMapping("/api/calculator")
-public class CalculatorApiController {
+public class CalculatorAPIController {
     @GetMapping("/calculate")
     public ResponseEntity<String> calculate(@RequestBody final String expression) {
         try {
