@@ -50,10 +50,11 @@ public class ChemApiController {
         return new ResponseEntity<>( repository.findByowner(username), HttpStatus.OK);
     }
 
-    @GetMapping("/calDensity/{")
-    {
+    // @GetMapping("/calDensity/")
+    
+    // {
         
-    }
+    // }
     
     
     
