@@ -47,6 +47,39 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+<<<<<<< HEAD
+    protected void configure(HttpSecurity http) throws Exception {
+        /* security rules ...
+         *   ... initial implementation is focused on protecting database information
+         *   ... "DELETE" is primary concern in authority rules, ADMIN only
+         *   ... "POST", actions desire STUDENT role
+         */
+        http
+            .authorizeRequests()
+                .antMatchers(POST, "/api/person/post/**").hasAnyAuthority("ROLE_STUDENT")
+                .antMatchers(DELETE, "/api/person/delete/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers("/database/personupdate/**").hasAnyAuthority("ROLE_STUDENT")
+                .antMatchers("/database/persondelete/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers( "/api/person/**").permitAll()
+                .antMatchers( "/api/refresh/token/**").permitAll()
+                .antMatchers("/", "/starters/**", "/frontend/**", "/mvc/**", "/database/person/**", "/database/personcreate", "/database/scrum/**", "/course/**").permitAll()
+                .antMatchers("/resources/**", "/static/**",  "/images/**", "/scss/**").permitAll()
+                .antMatchers("/volumes/uploads/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+            .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .and()
+            .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/database/person")
+                .permitAll()
+        ;
+        // Cross-Site Request Forgery needs to be disabled to allow activation of JS Fetch URIs
+        http.csrf().disable();
+    }
+=======
 	@Bean
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
@@ -74,4 +107,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
     
+>>>>>>> d6f1cb8f7b092deb7c31575401e52e6e0fa09c08
 }
