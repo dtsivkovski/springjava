@@ -47,7 +47,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-<<<<<<< HEAD
     protected void configure(HttpSecurity http) throws Exception {
         /* security rules ...
          *   ... initial implementation is focused on protecting database information
@@ -80,33 +79,3 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
     }
 }
-=======
-	@Bean
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
-	}
-
-    
-
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        // httpSecurity.csrf().disable();
-		httpSecurity
-		        // We don't need CSRF for this example
-                .csrf().disable()
-				// don't authenticate this particular request
-				.authorizeRequests().antMatchers("/authenticate", "/register").permitAll()
-				// all other requests need to be authenticated
-				.anyRequest().authenticated().and().
-				// make sure we use stateless session; session won't be used to
-				// store user's state.
-				exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-		// Add a filter to validate the tokens with every request
-		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-	}
-
-    
-}
->>>>>>> ccc423795ff5f451d60856ab77f2c2bb22ae04fa
