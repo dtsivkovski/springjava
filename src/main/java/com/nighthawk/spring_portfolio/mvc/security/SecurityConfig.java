@@ -19,6 +19,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.nighthawk.spring_portfolio.mvc.jwt.JwtAuthenticationEntryPoint;
 import com.nighthawk.spring_portfolio.mvc.jwt.JwtUserDetailsService;
 import com.nighthawk.spring_portfolio.mvc.jwt.JwtRequestFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
+
 
 @Configuration
 @EnableWebSecurity
@@ -62,12 +65,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
 				// don't authenticate this particular request
 				.authorizeRequests().antMatchers("/authenticate", "/register").permitAll()
+				.and().cors().and()
+				.headers()
+				.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Credentials", "true"))
+				.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-ExposedHeaders", "*", "Authorization"))
+				.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Headers", "Content-Type", "Authorization", "x-csrf-token"))
+				.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-MaxAge", "600"))
+				.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Methods", "POST", "GET", "OPTIONS", "HEAD"))
+				//.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Origin", "https://dylanluo05.github.io", "http://localhost:4000"))
+				.and()
 				// all other requests need to be authenticated
-				.anyRequest().authenticated().and().
-				// make sure we use stateless session; session won't be used to
-				// store user's state.
-				exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+				.logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/")
+				.and()
+			// make sure we use stateless session; 
+			// session won't be used to store user's state.
+			.exceptionHandling()
+				.authenticationEntryPoint(jwtAuthenticationEntryPoint)
+				.and()
+				.sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)           
+		;
 
 		// Add a filter to validate the tokens with every request
 		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

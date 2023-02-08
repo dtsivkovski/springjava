@@ -50,6 +50,7 @@ public class JwtApiController {
 			.secure(true)
 			.path("/")
 			.maxAge(3600)
+			.sameSite("None; Secure")
 			// .domain("example.com") // Set to backend domain
 			.build();
 		return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, tokenCookie.toString()).body(a);
