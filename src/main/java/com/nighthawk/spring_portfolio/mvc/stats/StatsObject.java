@@ -32,9 +32,8 @@ public class StatsObject {
     private Map<String, Double> history = new HashMap<String, Double>();
 
     // Initializes object with degrees of freedom and username
-    StatsObject(double n, double se, String username) {
+    StatsObject(double n, String username) {
         sampleSize = n;
-        standardError = se;
         owner = username;
     }
 
@@ -68,7 +67,7 @@ public class StatsObject {
     }
 
     public static void main(String[] args) {
-        StatsObject a = new StatsObject(10, 25, "dan@mail");
+        StatsObject a = new StatsObject(10, "dan@mail");
         a.calculateSDM(17.5);
         System.out.println("Sample size: " + a.getN());
         System.out.println("Standard Error: " + a.getSE());
