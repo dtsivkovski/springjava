@@ -58,19 +58,14 @@ public class StatsObject {
         return sampleSize;
     }
 
-    public double getSE() {
-        return standardError;
-    }
-
     public void clearHistory() {
         history.clear();
     }
 
     public static void main(String[] args) {
-        StatsObject a = new StatsObject(10, "dan@mail");
-        a.calculateSDM(17.5);
+        StatsObject a = new StatsObject(15, "dan@mail");
+        a.calculateSDM(20);
         System.out.println("Sample size: " + a.getN());
-        System.out.println("Standard Error: " + a.getSE());
         System.out.println("History: " + a.getHistory());
     }
 }
