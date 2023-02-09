@@ -39,11 +39,11 @@ public class StatsApiController {
         return new ResponseEntity<>( repository.findByowner(getUserName()), HttpStatus.OK);
     }
 
-    @GetMapping("/create/{sampleSize}") 
-    public ResponseEntity<List<StatsObject>> createStatsObject(@PathVariable double sampleSize, @PathVariable double StandardError) {
+    @GetMapping("/create/{sampleSize}/{standardError}") 
+    public ResponseEntity<List<StatsObject>> createStatsObject(@PathVariable double sampleSize, @PathVariable double standardError) {
         // Create new object and save to repo
         String username = getUserName();
-        StatsObject a = new StatsObject(sampleSize, StandardError, username);
+        StatsObject a = new StatsObject(sampleSize, standardError, username);
         repository.save(a);
         return new ResponseEntity<>( repository.findByowner(username), HttpStatus.OK);
     }
