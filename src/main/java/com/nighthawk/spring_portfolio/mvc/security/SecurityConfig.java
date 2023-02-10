@@ -19,6 +19,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.nighthawk.spring_portfolio.mvc.jwt.JwtAuthenticationEntryPoint;
 import com.nighthawk.spring_portfolio.mvc.jwt.JwtUserDetailsService;
 import com.nighthawk.spring_portfolio.mvc.jwt.JwtRequestFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
+
 
 @Configuration
 @EnableWebSecurity
@@ -47,39 +50,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-<<<<<<< HEAD
-    protected void configure(HttpSecurity http) throws Exception {
-        /* security rules ...
-         *   ... initial implementation is focused on protecting database information
-         *   ... "DELETE" is primary concern in authority rules, ADMIN only
-         *   ... "POST", actions desire STUDENT role
-         */
-        http
-            .authorizeRequests()
-                .antMatchers(POST, "/api/person/post/**").hasAnyAuthority("ROLE_STUDENT")
-                .antMatchers(DELETE, "/api/person/delete/**").hasAnyAuthority("ROLE_ADMIN")
-                .antMatchers("/database/personupdate/**").hasAnyAuthority("ROLE_STUDENT")
-                .antMatchers("/database/persondelete/**").hasAnyAuthority("ROLE_ADMIN")
-                .antMatchers( "/api/person/**").permitAll()
-                .antMatchers( "/api/refresh/token/**").permitAll()
-                .antMatchers("/", "/starters/**", "/frontend/**", "/mvc/**", "/database/person/**", "/database/personcreate", "/database/scrum/**", "/course/**").permitAll()
-                .antMatchers("/resources/**", "/static/**",  "/images/**", "/scss/**").permitAll()
-                .antMatchers("/volumes/uploads/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-            .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-            .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/database/person")
-                .permitAll()
-        ;
-        // Cross-Site Request Forgery needs to be disabled to allow activation of JS Fetch URIs
-        http.csrf().disable();
-    }
-=======
 	@Bean
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
@@ -95,17 +65,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
 				// don't authenticate this particular request
 				.authorizeRequests().antMatchers("/authenticate", "/register").permitAll()
+				.and().cors().and()
+				.headers()
+				.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Credentials", "true"))
+				.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-ExposedHeaders", "*", "Authorization"))
+				.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Headers", "Content-Type", "Authorization", "x-csrf-token"))
+				.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-MaxAge", "600"))
+				.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Methods", "POST", "GET", "OPTIONS", "HEAD"))
+				//.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Origin", "https://dylanluo05.github.io", "http://localhost:4000"))
+				.and()
 				// all other requests need to be authenticated
-				.anyRequest().authenticated().and().
-				// make sure we use stateless session; session won't be used to
-				// store user's state.
-				exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+				.logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/")
+				.and()
+			// make sure we use stateless session; 
+			// session won't be used to store user's state.
+			.exceptionHandling()
+				.authenticationEntryPoint(jwtAuthenticationEntryPoint)
+				.and()
+				.sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)           
+		;
 
 		// Add a filter to validate the tokens with every request
 		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 
     
->>>>>>> d6f1cb8f7b092deb7c31575401e52e6e0fa09c08
 }
