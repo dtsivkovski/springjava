@@ -21,6 +21,13 @@ public class Calculator {
         OPERATORS.put("root", 2);
         OPERATORS.put("sqrt", 2);
         OPERATORS.put("ncr", 2);
+        OPERATORS.put("sin", 2);
+        OPERATORS.put("cos", 2);
+        OPERATORS.put("tan", 2);
+        OPERATORS.put("ln", 2);
+        OPERATORS.put("sinh", 2);
+        OPERATORS.put("cosh", 2);
+        OPERATORS.put("tanh", 2);
         OPERATORS.put("*", 3);
         OPERATORS.put("/", 3);
         OPERATORS.put("%", 3);
@@ -132,6 +139,13 @@ public class Calculator {
                 case "sqrt":
                 case "root":
                 case "ncr":
+                case "sin":
+                case "cos":
+                case "tan":
+                case "ln":
+                case "sinh":
+                case "cosh":
+                case "tanh":
                     // While stack
                     // not empty AND stack top element
                     // and is an operator
@@ -227,7 +241,26 @@ public class Calculator {
                             }
                             result = (double) nFac/(rFac * nMinusRFac);
                             break;
-                        default:
+                        case "sin":
+                            result = Math.sin(y);
+                            break;
+                        case "cos":
+                            result = Math.cos(y);
+                            break;
+                        case "tan":
+                            result = Math.tan(y);
+                            break;
+                        case "ln":
+                            result = Math.log(y);
+                            break;
+                        case "sinh":
+                            result = Math.sinh(y);
+                            break;
+                        case "cosh":
+                            result = Math.cosh(y);
+                            break;
+                        case "tanh":
+                            result = Math.tanh(y);
                             break;
                     }
 
