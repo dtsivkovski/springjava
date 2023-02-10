@@ -210,8 +210,8 @@ public class Calculator {
             {
                               
                 // Pop the top two entries
-                double a = calcStack.pop();
-                double b = calcStack.pop();
+                double x = calcStack.pop();
+                double y = calcStack.pop();
 
                     // Calculate intermediate results
                     switch (token) {
