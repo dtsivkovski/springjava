@@ -287,5 +287,53 @@ public class Calculator {
         String json = "{ \"Expression\": \"" + this.expression + "\", \"Tokens\": \"" + this.tokens + "\", \"RPN\": \"" + this.reverse_polish + "\", \"Result\": " + this.result + " }";
         return json;
     }
+
+    public static void main(String[] args) {
+
+        Calculator myCalculator1 = new Calculator("1 + 2 * 4");
+        System.out.println("First Calculator Example:");
+        System.out.println("-------------------------");
+        System.out.println("Original Expression: " + myCalculator1.expression);
+        System.out.println("Tokens ArrayList: " + myCalculator1.tokens);
+        System.out.println("Reverse Polish Notation: " + myCalculator1.reverse_polish);
+        System.out.println("Calculator Output: " + myCalculator1.result);
+        System.out.println("");
+
+        Calculator myCalculator2 = new Calculator("(1 + 2) * (8 / 2)");
+        System.out.println("Second Calculator Example:");
+        System.out.println("-------------------------");
+        System.out.println("Original Expression: " + myCalculator2.expression);
+        System.out.println("Tokens ArrayList: " + myCalculator2.tokens);
+        System.out.println("Reverse Polish Notation: " + myCalculator2.reverse_polish);
+        System.out.println("Calculator Output: " + myCalculator2.result);
+        System.out.println("");
+
+        Calculator myCalculator3 = new Calculator("3 ^ 4 + (8 % 3)");
+        System.out.println("Third Calculator Example:");
+        System.out.println("-------------------------");
+        System.out.println("Original Expression: " + myCalculator3.expression);
+        System.out.println("Tokens ArrayList: " + myCalculator3.tokens);
+        System.out.println("Reverse Polish Notation: " + myCalculator3.reverse_polish);
+        System.out.println("Calculator Output: " + myCalculator3.result);
+        System.out.println("");
+
+        Calculator myCalculator4 = new Calculator("(3 root 8 ^ 2");
+        System.out.println("Fourth Calculator Example:");
+        System.out.println("-------------------------");
+        System.out.println("Original Expression: " + myCalculator4.expression);
+        System.out.println("Tokens ArrayList: " + myCalculator4.tokens);
+        System.out.println("Reverse Polish Notation: " + myCalculator4.reverse_polish);
+        System.out.println("Calculator Output: " + myCalculator4.result);
+        System.out.println("");
+
+        Calculator myCalculator5 = new Calculator("8 ncr 3");
+        System.out.println("Fifth Calculator Example:");
+        System.out.println("-------------------------");
+        System.out.println("Original Expression: " + myCalculator5.expression);
+        System.out.println("Tokens ArrayList: " + myCalculator5.tokens);
+        System.out.println("Reverse Polish Notation: " + myCalculator5.reverse_polish);
+        System.out.println("Calculator Output: " + myCalculator5.result);
+        System.out.println("");
+    }
     
 }
