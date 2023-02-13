@@ -11,7 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.*;
 
 @RestController // annotation to simplify the creation of RESTful web services
-@RequestMapping("/api/statistics")
+@RequestMapping("/api/stats")
 public class StatsApiController {
     
     // Autowired enables Control to connect HTML and POJO Object to database easily for CRUD operations
