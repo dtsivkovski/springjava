@@ -66,6 +66,8 @@ public class PhysObject {
 
     public void clearHistory() {
         history.clear();
+        recentKE = 0;
+        recentPE = 0;
     }
 
     public static void main(String[] args) {
