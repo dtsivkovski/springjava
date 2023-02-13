@@ -21,7 +21,6 @@ public class ChisquaredObject {
 
     private String owner;
 
-    // Allele probabilities
     private double chisquaredValue = 0;
 
     private int[] observedValues;
