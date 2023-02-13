@@ -33,8 +33,8 @@ public class StatsApiController {
         return username;
     }
 
-    @GetMapping("/get/{objectID}")
-    public ResponseEntity<List<StatsObject>> getStatsObjects() {
+    @GetMapping("/get/")
+    public ResponseEntity<List<StatsObject>> getPhysObjects() {
         // Get user's objects by userid
         return new ResponseEntity<>( repository.findByowner(getUserName()), HttpStatus.OK);
     }
