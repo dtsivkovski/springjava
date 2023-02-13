@@ -37,22 +37,23 @@ public class JwtApiController {
     private ModelRepository repository;
 
 	@PostMapping("/authenticate")
-	public ResponseEntity<Person> createAuthenticationToken(@RequestBody Person authenticationRequest) throws Exception {
-		System.out.println("lol1");
+	public ResponseEntity<?> createAuthenticationToken(@RequestBody Person authenticationRequest) throws Exception {
+		System.out.println("Auth URL Reached - " + authenticationRequest.getEmail());
 		authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
-		System.out.println("lol2");
+		System.out.println("Completed authenticate() function");
 		final UserDetails userDetails = jwtUserDetailsService
 				.loadUserByUsername(authenticationRequest.getEmail());
 		final String token = jwtTokenUtil.generateToken(userDetails);
-		final Person a = repository.getByEmail(authenticationRequest.getEmail());
+		// final Person a = repository.getByEmail(authenticationRequest.getEmail());
 		final ResponseCookie tokenCookie = ResponseCookie.from("jwt", token)
 			.httpOnly(true)
 			.secure(true)
 			.path("/")
 			.maxAge(3600)
+			.sameSite("none")
 			// .domain("example.com") // Set to backend domain
 			.build();
-		return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, tokenCookie.toString()).body(a);
+		return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, tokenCookie.toString()).build();
 	}
 
 	@PostMapping("/register")
@@ -77,9 +78,9 @@ public class JwtApiController {
 
 	private void authenticate(String username, String password) throws Exception {
 		try {
-			System.out.println("auth1");
+			System.out.println("Reached authenticate() function");
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-			System.out.println("auth2");
+			System.out.println("Authenticated user " + username + " successfully");
 		} catch (DisabledException e) {
 			throw new Exception("USER_DISABLED", e);
 		} catch (BadCredentialsException e) {

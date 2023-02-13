@@ -1,7 +1,8 @@
-package com.nighthawk.spring_portfolio.mvc.physics;
+package com.nighthawk.spring_portfolio.mvc.stats;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.lang.Math;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,14 +13,17 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class PhysObject {
+public class StatsObject {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String owner;
-    private double mass;
-    private double recentKE;
-    private double recentPE;
+    private double sampleSize;
+    private double standardError;
+    private double recentSDM;
+    // private double degreesFreedom;
+    // private double tailProb;
+    // private double zScore;
 
     // Hashmap with type and result for history of calculations on the object
     @ElementCollection(fetch = FetchType.EAGER)
@@ -27,9 +31,9 @@ public class PhysObject {
     @Column(name = "result")
     private Map<String, Double> history = new HashMap<String, Double>();
 
-    // Initializes object with mass and username
-    PhysObject(double m, String username) {
-        mass = m;
+    // Initializes object with degrees of freedom and username
+    StatsObject(double n, String username) {
+        sampleSize = n;
         owner = username;
     }
 
@@ -38,45 +42,31 @@ public class PhysObject {
         history.put(typeinput, result);
     }
 
-    // Calculates KE using given vi value, saves it
-    public double calculateKE(double vi) {
-        double KE = 0.5 * mass * (vi * vi);
-        recentKE = KE;
-        String typeInp = "KE (v = " + vi + ")";
-        history.put(typeInp, KE);
-        return KE;
-    }
-
-    // Calculates PE using given g and h values, saves it
-    public double calculatePE(double g, double h) {
-        double PE = mass * g * h;
-        recentPE = PE;
-        String typeInp = "PE (g = " + g + ", h = " + h + ")";
-        addCalculation(typeInp, PE);
-        return PE;
+    public double calculateSDM(double standardError) {
+        double sdm = standardError / Math.sqrt(sampleSize);
+        recentSDM = sdm;
+        String typeInp = "SDM (n = " + sampleSize + ", SE = " + standardError + ")";
+        addCalculation(typeInp, sdm);
+        return sdm;
     }
 
     public Map<String, Double> getHistory() {
         return history;
     }
 
-    public double getMass() {
-        return mass;
+    public double getN() {
+        return sampleSize;
     }
 
     public void clearHistory() {
         history.clear();
-        recentKE = 0;
-        recentPE = 0;
     }
 
     public static void main(String[] args) {
-        PhysObject a = new PhysObject(10, "dan@mail");
-        a.calculateKE(10);
-        a.calculatePE(9.8, 10);
-        System.out.println("Mass: " + a.getMass());
+        StatsObject a = new StatsObject(15, "dan@mail");
+        a.calculateSDM(20);
+        System.out.println("Sample size: " + a.getN());
         System.out.println("History: " + a.getHistory());
-
     }
 }
 

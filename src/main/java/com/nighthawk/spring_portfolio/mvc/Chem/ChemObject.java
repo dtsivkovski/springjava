@@ -34,6 +34,7 @@ public class ChemObject {
         mass = m;
         volume=v;
         owner = username;
+        System.out.println("initialized");
         calculateD();
         molecularWeight = e;
         moles();
@@ -42,7 +43,8 @@ public class ChemObject {
 
     private void calculateD() {
 
-        density= mass/volume;
+        density = mass/volume;
+        System.out.println("Density Calculated");
 
     }
       
