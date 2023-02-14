@@ -11,5 +11,5 @@ public interface ChemJpa extends JpaRepository<ChemObject, Integer> {
     // List<PhysObject> findAllByOrderByuserIDAsc();
     List<ChemObject> findByowner(String username);
 
-    //List<ChemObject> findById(int id);
+    // List<ChemObject> findById(int id);
 }

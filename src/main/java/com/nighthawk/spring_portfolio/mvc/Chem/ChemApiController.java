@@ -55,21 +55,18 @@ public class ChemApiController {
         return new ResponseEntity<>(repository.findByowner(getUserName()), HttpStatus.OK);
     }
 
-    @GetMapping("/update/{ObjectId}/{mass}/{volume}")
-    public ResponseEntity<List<ChemObject>> scrubhistorychem(@PathVariable int id, @PathVariable double m, @PathVariable double v) {
-        ChemObject c = repository.findById(id).get();
+    // @GetMapping("/update/{ObjectId}/{mass}/{volume}")
+    // public ResponseEntity<List<ChemObject>> scrubhistorychem(@PathVariable int id, @PathVariable double m, @PathVariable double v) {
+    //     ChemObject c = repository.findById(id).get();
 
-        if (!(c.getOwner().equals(getUserName()))) {
-            return new ResponseEntity<>(repository.findByowner(getUserName()), HttpStatus.BAD_REQUEST);
-        }
+    //     if (!(c.getOwner().equals(getUserName()))) {
+    //         return new ResponseEntity<>(repository.findByowner(getUserName()), HttpStatus.BAD_REQUEST);
+    //     }
 
-        c.update(m,v);
-        return new ResponseEntity<>(repository.findByowner(getUserName()), HttpStatus.OK);
-    }
+    //     c.update(m,v);
+    //     return new ResponseEntity<>(repository.findByowner(getUserName()), HttpStatus.OK);
+    // }
         
-    
-
-    
     @GetMapping("/calculateDensity/{objectID}/{volume}")
     public ResponseEntity<ChemObject> calculateD(@PathVariable int objectID, @PathVariable double volume) {
         ChemObject a = repository.findById(objectID).get();
@@ -82,9 +79,6 @@ public class ChemApiController {
         repository.save(a);
         return new ResponseEntity<>( a, HttpStatus.OK);
     }
-    
-
-       
     
     /* 
     @WebServlet("/density")
