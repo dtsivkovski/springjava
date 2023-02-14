@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.nighthawk.spring_portfolio.mvc.biology.punnett.*;
+import com.nighthawk.spring_portfolio.mvc.biology.chisquared.*;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +22,7 @@ public class BiologyAPIController {
     // Autowired enables Control to connect HTML and POJO Object to database easily for CRUD operations
     @Autowired
     private PunnettJPA repository;
+    private ChisquaredJPA repo;
 
     /*
     GET List of physobjects
@@ -78,6 +80,49 @@ public class BiologyAPIController {
         }
         
         return new ResponseEntity<>( repository.findByowner(username), HttpStatus.OK);
+    }
+
+    @GetMapping("/chisquared/create/{observed}/{expected}")
+    public ResponseEntity<List<ChisquaredObject>> createChisquaredObject(@PathVariable int[] observed, @PathVariable int[] expected) {
+        // Create new object and save to repo
+        String username = getUserName();
+        ChisquaredObject a = new ChisquaredObject(observed, expected, username);
+        repo.save(a);
+        return new ResponseEntity<>( repo.findByowner(username), HttpStatus.OK);
+    }
+
+    @GetMapping("/chisquared/get/all")
+    public ResponseEntity<List<ChisquaredObject>> getChisquaredObjects() {
+        // Get all objects 
+        String username = getUserName();
+        return new ResponseEntity<>( repo.findByowner(username), HttpStatus.OK);
+    }
+
+    @GetMapping("/chisquared/get/{id}")
+    public ResponseEntity<ChisquaredObject> getChisquaredById(@PathVariable int id) {
+        ChisquaredObject a = repo.findById(id).get();
+
+        String username = getUserName();
+
+        if (a.getOwner().equals(username)) {
+            return new ResponseEntity<>(a, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @GetMapping("/chisquared/delete/{id}")
+    public ResponseEntity<List<ChisquaredObject>> deleteChisquaredObject(@PathVariable int id) {
+        // Delete object by id
+        ChisquaredObject a = repo.findById(id).get();
+
+        String username = getUserName();
+        
+        if (a.getOwner().equals(username)) {
+            repo.delete(a);
+        }
+        
+        return new ResponseEntity<>( repo.findByowner(username), HttpStatus.OK);
     }
 
 }
