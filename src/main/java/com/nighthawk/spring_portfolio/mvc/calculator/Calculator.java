@@ -289,7 +289,6 @@ public class Calculator {
     }
 
     public static void main(String[] args) {
-
         Calculator myCalculator1 = new Calculator("1 + 2 * 4");
         System.out.println("First Calculator Example:");
         System.out.println("-------------------------");
@@ -317,7 +316,7 @@ public class Calculator {
         System.out.println("Calculator Output: " + myCalculator3.result);
         System.out.println("");
 
-        Calculator myCalculator4 = new Calculator("(3 root 8 ^ 2");
+        Calculator myCalculator4 = new Calculator("1 + ");
         System.out.println("Fourth Calculator Example:");
         System.out.println("-------------------------");
         System.out.println("Original Expression: " + myCalculator4.expression);
@@ -333,6 +332,15 @@ public class Calculator {
         System.out.println("Tokens ArrayList: " + myCalculator5.tokens);
         System.out.println("Reverse Polish Notation: " + myCalculator5.reverse_polish);
         System.out.println("Calculator Output: " + myCalculator5.result);
+        System.out.println("");
+
+        Calculator myCalculator6 = new Calculator("1 + 2");
+        System.out.println("Sixth Calculator Example:");
+        System.out.println("-------------------------");
+        System.out.println("Original Expression: " + myCalculator6.expression);
+        System.out.println("Tokens ArrayList: " + myCalculator6.tokens);
+        System.out.println("Reverse Polish Notation: " + myCalculator6.reverse_polish);
+        System.out.println("Calculator Output: " + myCalculator6.result);
         System.out.println("");
     }
     

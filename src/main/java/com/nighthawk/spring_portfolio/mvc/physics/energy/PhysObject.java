@@ -1,4 +1,4 @@
-package com.nighthawk.spring_portfolio.mvc.physics;
+package com.nighthawk.spring_portfolio.mvc.physics.energy;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +28,7 @@ public class PhysObject {
     private Map<String, Double> history = new HashMap<String, Double>();
 
     // Initializes object with mass and username
-    PhysObject(double m, String username) {
+    public PhysObject(double m, String username) {
         mass = m;
         owner = username;
     }
