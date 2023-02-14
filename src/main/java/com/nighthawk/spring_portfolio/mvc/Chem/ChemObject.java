@@ -22,7 +22,7 @@ public class ChemObject {
     private double moles;
     private double density;
     private double volume;
-    
+    private double molecularWeight;
     // Hashmap with type and result for history of calculations on the object
     @ElementCollection(fetch = FetchType.EAGER)
     @MapKeyColumn(name = "type")
@@ -31,11 +31,20 @@ public class ChemObject {
 
 
     // Initializes object with mass and username
-    ChemObject(double m, double v, String username) {
+    ChemObject(double m, double v, double e, String username) {
         mass = m;
         volume=v;
         owner = username;
         System.out.println("initialized");
+        calculateD();
+    }
+        molecularWeight = e;
+        moles();
+
+    public void update(double m, double v)
+    {
+        mass = m;
+        volume = v;
         calculateD();
     }
 
@@ -54,7 +63,12 @@ public class ChemObject {
         System.out.println("Density Calculated");
 
     }
-
+      
+    
+    public void moles() {
+        moles=  mass/molecularWeight;
+    }
+    }
     
 
-}
+

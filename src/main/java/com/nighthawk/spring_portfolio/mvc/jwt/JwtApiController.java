@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.json.simple.JSONObject;
@@ -74,6 +75,18 @@ public class JwtApiController {
 		} catch (Exception e) {
 			throw new Exception("USER_ALREADY_EXISTS", e);
 		}		// auth and get user details
+	}
+
+	@GetMapping("/logoutJWT")
+	public ResponseEntity<?> logout() {
+		final ResponseCookie tokenCookie = ResponseCookie.from("jwt", "")
+			.httpOnly(true)
+			.secure(true)
+			.path("/")
+			.maxAge(0)
+			.sameSite("none")
+			.build();
+		return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, tokenCookie.toString()).build();
 	}
 
 	private void authenticate(String username, String password) throws Exception {

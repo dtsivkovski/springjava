@@ -33,13 +33,11 @@ public class ChemApiController {
         return new ResponseEntity<>( repository.findByowner(getUserName()), HttpStatus.OK);
     }
 
-    @GetMapping("/create/{mass}/{volume}") 
-    public ResponseEntity<List<ChemObject>> createChemObject(@PathVariable double mass, @PathVariable double volume) {
+    @GetMapping("/create/{mass}/{volume}/{molecularWeight}") 
+    public ResponseEntity<List<ChemObject>> createChemObject(@PathVariable double mass, @PathVariable double volume, @PathVariable double molecularWeight) {
         // Create new object and save to repo
         String username = getUserName();
-        System.out.println("test 1");
-        ChemObject a = new ChemObject(mass, volume, username);
-        System.out.println("test 2");
+        ChemObject a = new ChemObject(mass, volume, molecularWeight, username);
         repository.save(a);
         System.out.println("saved");
         return new ResponseEntity<>( repository.findByowner(username), HttpStatus.OK);

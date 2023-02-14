@@ -4,6 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.nighthawk.spring_portfolio.mvc.physics.energy.*;
+import com.nighthawk.spring_portfolio.mvc.physics.kinematics.*;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -18,6 +22,7 @@ public class PhysAPIController {
     // Autowired enables Control to connect HTML and POJO Object to database easily for CRUD operations
     @Autowired
     private PhysJPA repository;
+    private KinematicsJPA repo;
 
     /*
     GET List of physobjects
@@ -34,13 +39,13 @@ public class PhysAPIController {
         return username;
     }
 
-    @GetMapping("/get/")
+    @GetMapping("/energy/get/")
     public ResponseEntity<List<PhysObject>> getPhysObjects() {
         // Get user's objects by userid
         return new ResponseEntity<>( repository.findByowner(getUserName()), HttpStatus.OK);
     }
 
-    @GetMapping("/create/{mass}") 
+    @GetMapping("/energy/create/{mass}") 
     public ResponseEntity<List<PhysObject>> createPhysObject(@PathVariable double mass) {
         // Create new object and save to repo
         String username = getUserName();
@@ -49,7 +54,7 @@ public class PhysAPIController {
         return new ResponseEntity<>( repository.findByowner(username), HttpStatus.OK);
     }
 
-    @GetMapping("/calculateKE/{objectID}/{velocity}")
+    @GetMapping("/energy/calculateKE/{objectID}/{velocity}")
     public ResponseEntity<PhysObject> calculateKE(@PathVariable int objectID, @PathVariable double velocity) {
         PhysObject a = repository.findById(objectID).get();
         //Check if owner matches
@@ -62,7 +67,7 @@ public class PhysAPIController {
         return new ResponseEntity<>( a, HttpStatus.OK);
     }
 
-    @GetMapping("/calculatePE/{objectID}/{g}/{h}")
+    @GetMapping("/energy/calculatePE/{objectID}/{g}/{h}")
     public ResponseEntity<PhysObject> calculatePE(@PathVariable int objectID, @PathVariable double g, @PathVariable double h) {
         PhysObject a = repository.findById(objectID).get();
         // Check if owner matches
@@ -75,7 +80,7 @@ public class PhysAPIController {
         return new ResponseEntity<>( a, HttpStatus.OK);
     }
 
-    @GetMapping("/scrub/{objectID}")
+    @GetMapping("/energy/scrub/{objectID}")
     public ResponseEntity<PhysObject> scrub(@PathVariable int objectID) {
         PhysObject a = repository.findById(objectID).get();
         // Check if owner matches
@@ -88,7 +93,7 @@ public class PhysAPIController {
         return new ResponseEntity<>(a, HttpStatus.OK);
     }
 
-    @GetMapping("/delete/{objectID}")
+    @GetMapping("/energy/delete/{objectID}")
     public ResponseEntity<List<PhysObject>> delete(@PathVariable int objectID) {
         PhysObject a = repository.findById(objectID).get();
         // Check if owner matches
@@ -98,5 +103,48 @@ public class PhysAPIController {
         // Delete object from repo
         repository.delete(a);
         return new ResponseEntity<>(repository.findByowner(getUserName()), HttpStatus.OK);
+    }
+
+    @GetMapping("/kinematics/create/{viInput}/{viKnown}/{vfInput}/{vfKnown}/{aInput}/{aKnown}/{xInput}/{xKnown}/{tInput}/{tKnown}/{unknownInput}")
+    public ResponseEntity<List<KinematicsObject>> createKinematicsObject(@PathVariable double viInput, @PathVariable boolean viKnown, @PathVariable double vfInput, @PathVariable boolean vfKnown, @PathVariable double aInput, @PathVariable boolean aKnown, @PathVariable double xInput, @PathVariable boolean xKnown, @PathVariable double tInput, @PathVariable boolean tKnown, @PathVariable String unknownInput) {
+        // Create new object and save to repo
+        String username = getUserName();
+        KinematicsObject a = new KinematicsObject(viInput, viKnown, vfInput, vfKnown, aInput, aKnown, xInput, xKnown, tInput, xKnown, unknownInput, username);
+        repo.save(a);
+        return new ResponseEntity<>( repo.findByowner(username), HttpStatus.OK);
+    }
+
+    @GetMapping("/kinematics/get/all")
+    public ResponseEntity<List<KinematicsObject>> getKinematicsObjects() {
+        // Get all objects 
+        String username = getUserName();
+        return new ResponseEntity<>( repo.findByowner(username), HttpStatus.OK);
+    }
+
+    @GetMapping("/kinematics/get/{id}")
+    public ResponseEntity<KinematicsObject> getKinematicsById(@PathVariable int id) {
+        KinematicsObject a = repo.findById(id).get();
+
+        String username = getUserName();
+
+        if (a.getOwner().equals(username)) {
+            return new ResponseEntity<>(a, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @GetMapping("/kinematics/delete/{id}")
+    public ResponseEntity<List<KinematicsObject>> deleteKinematicsObject(@PathVariable int id) {
+        // Delete object by id
+        KinematicsObject a = repo.findById(id).get();
+
+        String username = getUserName();
+        
+        if (a.getOwner().equals(username)) {
+            repo.delete(a);
+        }
+        
+        return new ResponseEntity<>( repo.findByowner(username), HttpStatus.OK);
     }
 }
