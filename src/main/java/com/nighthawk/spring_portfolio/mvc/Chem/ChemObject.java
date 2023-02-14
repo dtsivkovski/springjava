@@ -37,15 +37,8 @@ public class ChemObject {
         owner = username;
         System.out.println("initialized");
         calculateD();
-    }
         molecularWeight = e;
         moles();
-
-    public void update(double m, double v)
-    {
-        mass = m;
-        volume = v;
-        calculateD();
     }
 
     public void update(double m, double v)
@@ -54,7 +47,6 @@ public class ChemObject {
         volume = v;
         calculateD();
     }
-    
     
 
     private void calculateD() {
@@ -66,7 +58,7 @@ public class ChemObject {
       
     
     public void moles() {
-        moles=  mass/molecularWeight;
+        moles =  mass/molecularWeight;
     }
     }
     
