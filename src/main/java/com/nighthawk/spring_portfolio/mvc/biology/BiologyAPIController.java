@@ -40,12 +40,12 @@ public class BiologyAPIController {
     }
 
     @GetMapping("/punnett/create/{a1}/{a2}/{b1}/{b2}")
-    public ResponseEntity<List<PunnettObject>> createPunnettObject(@PathVariable char a1, @PathVariable char a2, @PathVariable char b1, @PathVariable char b2) {
+    public ResponseEntity<PunnettObject> createPunnettObject(@PathVariable char a1, @PathVariable char a2, @PathVariable char b1, @PathVariable char b2) {
         // Create new object and save to repo
         String username = getUserName();
         PunnettObject a = new PunnettObject(a1, a2, b1, b2, username);
         repository.save(a);
-        return new ResponseEntity<>( repository.findByowner(username), HttpStatus.OK);
+        return new ResponseEntity<PunnettObject>(a, HttpStatus.OK);
     }
 
     @GetMapping("/punnett/get/all")
