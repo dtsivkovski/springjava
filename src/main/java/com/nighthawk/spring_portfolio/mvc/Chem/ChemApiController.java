@@ -43,6 +43,32 @@ public class ChemApiController {
         return new ResponseEntity<>( repository.findByowner(username), HttpStatus.OK);
     }
 
+    @GetMapping("/delete/{Objectid}")
+    public ResponseEntity<List<ChemObject>> detelechem(@PathVariable int Objectid) {
+        ChemObject b = repository.findById(Objectid).get();
+
+        if (!(b.getOwner().equals(getUserName()))) {
+            return new ResponseEntity<>(repository.findByowner(getUserName()), HttpStatus.BAD_REQUEST);
+        }
+
+        repository.delete(b);
+        return new ResponseEntity<>(repository.findByowner(getUserName()), HttpStatus.OK);
+    }
+
+    @GetMapping("/update/{ObjectId}/{mass}/{volume}")
+    public ResponseEntity<List<ChemObject>> scrubhistorychem(@PathVariable int id, @PathVariable double m, @PathVariable double v) {
+        ChemObject c = repository.findById(id).get();
+
+        if (!(c.getOwner().equals(getUserName()))) {
+            return new ResponseEntity<>(repository.findByowner(getUserName()), HttpStatus.BAD_REQUEST);
+        }
+
+        c.update(m,v);
+        return new ResponseEntity<>(repository.findByowner(getUserName()), HttpStatus.OK);
+    }
+        
+    
+
     
     
     
