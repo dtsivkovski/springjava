@@ -1,4 +1,4 @@
-package com.nighthawk.spring_portfolio.mvc.physics;
+package com.nighthawk.spring_portfolio.mvc.physics.energy;
 
 import java.util.List;
 
