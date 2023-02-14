@@ -16,7 +16,7 @@ public class ChemObject {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-
+    private ChemJpa repository;
     private String owner;
     private double mass;
     private double moles;
@@ -29,6 +29,7 @@ public class ChemObject {
     @Column(name = "result")
     private Map<String, Double> history = new HashMap<String, Double>();
 
+
     // Initializes object with mass and username
     ChemObject(double m, double v, double e, String username) {
         mass = m;
@@ -38,8 +39,15 @@ public class ChemObject {
         calculateD();
         molecularWeight = e;
         moles();
-    
     }
+
+    public void update(double m, double v)
+    {
+        mass = m;
+        volume = v;
+        calculateD();
+    }
+    
 
     private void calculateD() {
 
@@ -49,9 +57,9 @@ public class ChemObject {
     }
       
     
-        public void moles() {
-            moles=  mass/molecularWeight;
-        }
+    public void moles() {
+        moles =  mass/molecularWeight;
+    }
     }
     
 
