@@ -11,8 +11,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.*;
 
-
-
 @RestController
 @RequestMapping("/api/Chem")
 public class ChemApiController {
@@ -30,83 +28,90 @@ public class ChemApiController {
     @GetMapping("/get/")
     public ResponseEntity<List<ChemObject>> getChemObjects() {
         // Get user's objects by userid
-        return new ResponseEntity<>( repository.findByowner(getUserName()), HttpStatus.OK);
+        return new ResponseEntity<>(repository.findByOwner(getUserName()), HttpStatus.OK);
     }
 
-    @GetMapping("/create/{mass}") 
-    public ResponseEntity<List<ChemObject>> createChemObject(@PathVariable double mass) {
+    @GetMapping("/create/{mass}/{volume}/{molecularWeight}")
+    public ResponseEntity<List<ChemObject>> createChemObject(@PathVariable double mass, @PathVariable double volume, @PathVariable double molecularWeight) {
         // Create new object and save to repo
         String username = getUserName();
-        ChemObject a = new ChemObject(mass, username);
+        ChemObject a = new ChemObject(mass, volume, molecularWeight, username);
         repository.save(a);
         System.out.println("saved");
-        return new ResponseEntity<>( repository.findByowner(username), HttpStatus.OK);
+        return new ResponseEntity<>(repository.findByOwner(username), HttpStatus.OK);
     }
 
     @GetMapping("/delete/{Objectid}")
-    public ResponseEntity<List<ChemObject>> detelechem(@PathVariable int Objectid) {
-        ChemObject b = repository.findById(Objectid).get();
+    public ResponseEntity<List<ChemObject>> deleteChem(@PathVariable int Objectid) {
+        Optional<ChemObject> optional = repository.findById(Objectid);
 
-        if (!(b.getOwner().equals(getUserName()))) {
-            return new ResponseEntity<>(repository.findByowner(getUserName()), HttpStatus.BAD_REQUEST);
+        if (optional.isPresent()) {
+            ChemObject b = optional.get();
+            if (!(b.getOwner().equals(getUserName()))) {
+                return new ResponseEntity<>(repository.findByOwner(getUserName()), HttpStatus.BAD_REQUEST);
+            }
+            repository.delete(b);
         }
 
-        repository.delete(b);
-        return new ResponseEntity<>(repository.findByowner(getUserName()), HttpStatus.OK);
+        return new ResponseEntity<>(repository.findByOwner(getUserName()), HttpStatus.OK);
     }
 
     @GetMapping("/update/{ObjectId}/{mass}/{volume}")
-    public ResponseEntity<List<ChemObject>> scrubhistorychem(@PathVariable int id, @PathVariable double m, @PathVariable double v) {
-        ChemObject c = repository.findById(id).get();
+    public ResponseEntity<List<ChemObject>> updateChem(@PathVariable int id, @PathVariable double m,
+            @PathVariable double v, @PathVariable double mw) {
+        Optional<ChemObject> optional = repository.findById(id);
 
-        if (!(c.getOwner().equals(getUserName()))) {
-            return new ResponseEntity<>(repository.findByowner(getUserName()), HttpStatus.BAD_REQUEST);
+        if (optional.isPresent()) {
+            ChemObject c = optional.get();
+            if (!(c.getOwner().equals(getUserName()))) {
+                return new ResponseEntity<>(repository.findByOwner(getUserName()), HttpStatus.BAD_REQUEST);
+            }
+            c.setMass(m);
+            c.setVolume(v);
+            c.setMolecularWeight(mw);
+            repository.save(c);
         }
 
-       
-        return new ResponseEntity<>(repository.findByowner(getUserName()), HttpStatus.OK);
+        return new ResponseEntity<>(repository.findByOwner(getUserName()), HttpStatus.OK);
     }
-        
-    
 
-    
     @GetMapping("/calculateDensity/{objectID}/{volume}")
     public ResponseEntity<ChemObject> calculateD(@PathVariable int objectID, @PathVariable double volume) {
         ChemObject a = repository.findById(objectID).get();
-        //Check if owner matches
+        // Check if owner matches
         if (!(a.getOwner().equals(getUserName()))) {
             return new ResponseEntity<>(a, HttpStatus.BAD_REQUEST);
         }
         // Calculate the standard deviation of the population mean and save to repo
         a.calculateDensity(volume);
         repository.save(a);
-        return new ResponseEntity<>( a, HttpStatus.OK);
+        return new ResponseEntity<>(a, HttpStatus.OK);
     }
-    
 
-       
-    
-    /* 
-    @WebServlet("/density")
-    public class DensityServlet extends HttpServlet {
-        @Override
-        protected void doPost(HttpServletRequest request, HttpServletResponse response)
-                throws ServletException, IOException {
-            String mass = request.getParameter("mass");
-            String volume = request.getParameter("volume");
-            double density = Double.parseDouble(mass) / (Double.parseDouble(volume) / 1000);
-            request.setAttribute("density", density);
-            request.getRequestDispatcher("densityResult.jsp").forward(request, response);
-        }
-    }
-    */
-}
-    
     /*
-    GET List of physobjects
+     * @WebServlet("/density")
+     * public class DensityServlet extends HttpServlet {
+     * 
+     * @Override
+     * protected void doPost(HttpServletRequest request, HttpServletResponse
+     * response)
+     * throws ServletException, IOException {
+     * String mass = request.getParameter("mass");
+     * String volume = request.getParameter("volume");
+     * double density = Double.parseDouble(mass) / (Double.parseDouble(volume) /
+     * 1000);
+     * request.setAttribute("density", density);
+     * request.getRequestDispatcher("densityResult.jsp").forward(request, response);
+     * }
+     * }
      */
-    // @GetMapping("/get/all")
-    // public ResponseEntity<List<PhysObject>> getPhysObjects() {
-    //     // Get all objects 
-    //     return new ResponseEntity<>( repository.findAll(), HttpStatus.OK);
-    // }
+}
+
+/*
+ * GET List of physobjects
+ */
+// @GetMapping("/get/all")
+// public ResponseEntity<List<PhysObject>> getPhysObjects() {
+// // Get all objects
+// return new ResponseEntity<>( repository.findAll(), HttpStatus.OK);
+// }
