@@ -63,7 +63,7 @@ public class ChemApiController {
             return new ResponseEntity<>(repository.findByowner(getUserName()), HttpStatus.BAD_REQUEST);
         }
 
-        c.update(m,v);
+       
         return new ResponseEntity<>(repository.findByowner(getUserName()), HttpStatus.OK);
     }
         
