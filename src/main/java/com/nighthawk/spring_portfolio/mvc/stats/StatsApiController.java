@@ -39,7 +39,7 @@ public class StatsApiController {
         return new ResponseEntity<>( repository.findByowner(getUserName()), HttpStatus.OK);
     }
 
-    @GetMapping("/create/{sampleSize}/{standardError}") 
+    @GetMapping("/create/{sampleSize}") 
     public ResponseEntity<List<StatsObject>> createStatsObject(@PathVariable double sampleSize) {
         // Create new object and save to repo
         String username = getUserName();
@@ -49,7 +49,7 @@ public class StatsApiController {
     }
 
     @GetMapping("/calculateSDM/{objectID}/{standardError}")
-    public ResponseEntity<StatsObject> calculateKE(@PathVariable int objectID, @PathVariable double standardError) {
+    public ResponseEntity<StatsObject> calculateSDM(@PathVariable int objectID, @PathVariable double standardError) {
         StatsObject a = repository.findById(objectID).get();
         //Check if owner matches
         if (!(a.getOwner().equals(getUserName()))) {
