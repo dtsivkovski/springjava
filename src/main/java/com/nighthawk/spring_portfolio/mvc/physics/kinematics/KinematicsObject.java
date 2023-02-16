@@ -25,10 +25,20 @@ public class KinematicsObject {
     private double aValue;
     private double xValue;
     private double tValue;
+    private String name;
     private String unknownValue;
     private double finalAnswer;
 
-    public KinematicsObject(double viInput, boolean viKnown, double vfInput, boolean vfKnown, double aInput, boolean aKnown, double xInput, boolean xKnown, double tInput, boolean tKnown, String unknownInput, String username) {
+    public KinematicsObject(String n, String username) {
+        name = n;
+        owner = username;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double calculateKinematics(double viInput, boolean viKnown, double vfInput, boolean vfKnown, double aInput, boolean aKnown, double xInput, boolean xKnown, double tInput, boolean tKnown, String unknownInput) {
         if (viKnown == true) {
             knownValues.put("Initial Velocity", viKnown);
             viValue = viInput;
@@ -62,12 +72,10 @@ public class KinematicsObject {
 
         unknownValue = unknownInput;
     
-        calculateKinematics();
-        
-        owner = username;
+        return kinematics();
     }
 
-    private void calculateKinematics() {
+    private double kinematics() {
         switch(unknownValue) {
             case "Initial Velocity":
                 if (knownValues.get("Displacement") == false) {
@@ -143,11 +151,13 @@ public class KinematicsObject {
                 }
                 break;
         }
+
+        return finalAnswer;
     }
 
     public static void main(String[] args) {
-        KinematicsObject test = new KinematicsObject(0, true, 0, false, -1.67, true, -1.4, true, 0, false, "Timex", "test");
+        KinematicsObject test = new KinematicsObject("Test", "test");
         System.out.println(test);
-        System.out.println(test.getFinalAnswer());
+        System.out.println(test.calculateKinematics(0, true, 0, false, -1.67, true, -1.4, true, 0, false, "Time"));
     }
 }

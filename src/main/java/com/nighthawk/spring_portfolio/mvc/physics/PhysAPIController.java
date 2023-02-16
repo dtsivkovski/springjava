@@ -105,13 +105,26 @@ public class PhysAPIController {
         return new ResponseEntity<>(repository.findByowner(getUserName()), HttpStatus.OK);
     }
 
-    @GetMapping("/kinematics/create/{viInput}/{viKnown}/{vfInput}/{vfKnown}/{aInput}/{aKnown}/{xInput}/{xKnown}/{tInput}/{tKnown}/{unknownInput}")
-    public ResponseEntity<List<KinematicsObject>> createKinematicsObject(@PathVariable double viInput, @PathVariable boolean viKnown, @PathVariable double vfInput, @PathVariable boolean vfKnown, @PathVariable double aInput, @PathVariable boolean aKnown, @PathVariable double xInput, @PathVariable boolean xKnown, @PathVariable double tInput, @PathVariable boolean tKnown, @PathVariable String unknownInput) {
+    @GetMapping("/kinematics/create/{name}") 
+    public ResponseEntity<List<KinematicsObject>> createKinematicsObject(@PathVariable String name) {
         // Create new object and save to repo
         String username = getUserName();
-        KinematicsObject a = new KinematicsObject(viInput, viKnown, vfInput, vfKnown, aInput, aKnown, xInput, xKnown, tInput, xKnown, unknownInput, username);
+        KinematicsObject a = new KinematicsObject(name, username);
         repo.save(a);
         return new ResponseEntity<>( repo.findByowner(username), HttpStatus.OK);
+    }
+
+    @GetMapping("/kinematics/calculateKinematics/{objectID}/{viInput}/{viKnown}/{vfInput}/{vfKnown}/{aInput}/{aKnown}/{xInput}/{xKnown}/{tInput}/{tKnown}/{unknownInput}")
+    public ResponseEntity<KinematicsObject> calculateKinematics(@PathVariable int objectID, @PathVariable double viInput, @PathVariable boolean viKnown, @PathVariable double vfInput, @PathVariable boolean vfKnown, @PathVariable double aInput, @PathVariable boolean aKnown, @PathVariable double xInput, @PathVariable boolean xKnown, @PathVariable double tInput, @PathVariable boolean tKnown, @PathVariable String unknownInput) {
+        KinematicsObject a = repo.findById(objectID).get();
+        //Check if owner matches
+        if (!(a.getOwner().equals(getUserName()))) {
+            return new ResponseEntity<>(a, HttpStatus.BAD_REQUEST);
+        }
+        // Calculate KE and save to repo
+        a.calculateKinematics(viInput, viKnown, vfInput, vfKnown, aInput, aKnown, xInput, xKnown, tInput, xKnown, unknownInput);
+        repo.save(a);
+        return new ResponseEntity<>(a, HttpStatus.OK);
     }
 
     @GetMapping("/kinematics/get/all")
