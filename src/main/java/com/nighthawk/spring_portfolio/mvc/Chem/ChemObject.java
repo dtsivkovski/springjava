@@ -14,24 +14,30 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 public class ChemObject {
+
+    @Column(name = "id")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     // private ChemJpa repository;
-    @NotEmpty
+    @Column(name = "owner")
     private String owner;
 
-    @NotEmpty
+    @Column(name = "mass")
     private double mass;
 
-    @NotEmpty
+    @Column(name = "volume")
     private double volume;
 
-    @NotEmpty
+    @Column(name = "molecular_weight")
     private double molecularWeight;
 
+    @Column(name = "density")
     private double density;
+
+    @Column(name = "mole")
     private double mole;
+
     // Hashmap with type and result for history of calculations on the object
     @ElementCollection(fetch = FetchType.EAGER)
     @MapKeyColumn(name = "type")
@@ -74,4 +80,20 @@ public class ChemObject {
         // addCalculation(typeInp, mole);
         return mole;
     }
+
+    public String toString() {
+        return ("{ \"Mass\":" + this.mass +
+                ", \"Volume\":" + this.volume +
+                ", \"molecular weight\":" + this.molecularWeight +
+                ", \"density\":" + this.density +
+                ", \"mole\":" + this.mole +
+                ", \"User\":" + this.owner +
+                " }");
+    }
+
+    public static void main(String[] args) {
+        ChemObject a = new ChemObject(45, 34, 12, "dan@mail");
+        System.out.println(a);
+    }
+
 }
