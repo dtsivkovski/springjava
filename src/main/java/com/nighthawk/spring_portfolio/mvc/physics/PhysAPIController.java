@@ -127,24 +127,11 @@ public class PhysAPIController {
         return new ResponseEntity<>(a, HttpStatus.OK);
     }
 
-    @GetMapping("/kinematics/get/all")
+    @GetMapping("/kinematics/get/")
     public ResponseEntity<List<KinematicsObject>> getKinematicsObjects() {
         // Get all objects 
         String username = getUserName();
         return new ResponseEntity<>( repo.findByowner(username), HttpStatus.OK);
-    }
-
-    @GetMapping("/kinematics/get/{id}")
-    public ResponseEntity<KinematicsObject> getKinematicsById(@PathVariable int id) {
-        KinematicsObject a = repo.findById(id).get();
-
-        String username = getUserName();
-
-        if (a.getOwner().equals(username)) {
-            return new ResponseEntity<>(a, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
     }
 
     @GetMapping("/kinematics/delete/{id}")
