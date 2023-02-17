@@ -1,8 +1,7 @@
-package com.nighthawk.spring_portfolio.mvc.stats;
+package com.nighthawk.spring_portfolio.mvc.chemTest;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.lang.Math;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,14 +12,16 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class StatsObject {
+public class ChemTestObject {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String owner;
-    private double sampleSize;
-    private double standardError;
-    private double recentSDM;
+    private double mass;
+    private double volume;
+    private double molecularWeight;
+    private double recentMole;
+    private double recentDensity;
     // private double degreesFreedom;
     // private double tailProb;
     // private double zScore;
@@ -31,9 +32,9 @@ public class StatsObject {
     @Column(name = "result")
     private Map<String, Double> history = new HashMap<String, Double>();
 
-    // Initializes object with sample size and username
-    StatsObject(double n, String username) {
-        sampleSize = n;
+    // Initializes object with degrees of freedom and username
+    ChemTestObject(double m, String username) {
+        mass = m;
         owner = username;
     }
 
@@ -42,20 +43,28 @@ public class StatsObject {
         history.put(typeinput, result);
     }
 
-    public double calculateSDM(double standardError) {
-        double sdm = standardError / Math.sqrt(sampleSize);
-        recentSDM = sdm;
-        String typeInp = "SDM (n = " + sampleSize + ", SE = " + standardError + ")";
-        addCalculation(typeInp, sdm);
-        return sdm;
+    public double calculateDensity(double volume) {
+        double density = mass / volume;
+        recentDensity = density;
+        String typeInp = "Density (m = " + mass + ", v = " + volume + ")";
+        addCalculation(typeInp, density);
+        return density;
+    }
+
+    public double calculateMole(double molecularWeight) {
+        double mole = mass / molecularWeight;
+        recentMole = mole;
+        String typeInp = "Moles (m = " + mass + ", mw = " + molecularWeight + ")";
+        addCalculation(typeInp, mole);
+        return mole;
     }
 
     public Map<String, Double> getHistory() {
         return history;
     }
 
-    public double getN() {
-        return sampleSize;
+    public double getMass() {
+        return mass;
     }
 
     public void clearHistory() {
@@ -63,9 +72,9 @@ public class StatsObject {
     }
 
     public static void main(String[] args) {
-        StatsObject a = new StatsObject(15, "dan@mail");
-        a.calculateSDM(20);
-        System.out.println("Sample size: " + a.getN());
+        ChemTestObject a = new ChemTestObject(15, "dan@mail");
+        a.calculateDensity(20);
+        System.out.println("Mass: " + a.getMass());
         System.out.println("History: " + a.getHistory());
     }
 }

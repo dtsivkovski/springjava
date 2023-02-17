@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.*;
 
+@CrossOrigin(origins = "https://frq.dtsivkovski.tk")
 @RestController
 @RequestMapping("/api/Chem")
 public class ChemApiController {
