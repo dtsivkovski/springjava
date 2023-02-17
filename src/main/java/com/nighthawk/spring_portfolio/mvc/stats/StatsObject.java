@@ -31,7 +31,7 @@ public class StatsObject {
     @Column(name = "result")
     private Map<String, Double> history = new HashMap<String, Double>();
 
-    // Initializes object with degrees of freedom and username
+    // Initializes object with sample size and username
     StatsObject(double n, String username) {
         sampleSize = n;
         owner = username;
