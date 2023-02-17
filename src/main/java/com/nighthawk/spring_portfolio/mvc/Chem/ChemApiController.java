@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.*;
 
+@CrossOrigin(origins = "http://localhost:8679")
 @RestController
 @RequestMapping("/api/Chem")
 public class ChemApiController {
@@ -31,7 +32,7 @@ public class ChemApiController {
         return new ResponseEntity<>(repository.findByOwner(getUserName()), HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:8679")
+    
     @PostMapping("/create")
     public ResponseEntity<List<ChemObject>> createChemObject(@RequestParam("mass") double mass,
             @RequestParam("volume") double volume,
