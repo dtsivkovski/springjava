@@ -45,7 +45,7 @@ public class ChemApiController {
         return new ResponseEntity<>(repository.findByOwner(username), HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{Objectid}")
+    @GetMapping("/delete/{Objectid}")
     public ResponseEntity<List<ChemObject>> deleteChem(@PathVariable int Objectid) {
         Optional<ChemObject> optional = repository.findById(Objectid);
 
