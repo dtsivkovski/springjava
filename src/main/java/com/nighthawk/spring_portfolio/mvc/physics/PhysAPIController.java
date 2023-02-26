@@ -22,6 +22,7 @@ public class PhysAPIController {
     // Autowired enables Control to connect HTML and POJO Object to database easily for CRUD operations
     @Autowired
     private PhysJPA repository;
+    @Autowired
     private KinematicsJPA repo;
 
     /*

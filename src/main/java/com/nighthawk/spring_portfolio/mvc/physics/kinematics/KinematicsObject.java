@@ -20,11 +20,11 @@ public class KinematicsObject {
     private String owner;
 
     HashMap<String, Boolean> knownValues = new HashMap<String, Boolean>();
-    private double viValue;
-    private double vfValue;
-    private double aValue;
-    private double xValue;
-    private double tValue;
+    private double viValue = 0;
+    private double vfValue = 0;
+    private double aValue = 0;
+    private double xValue = 0;
+    private double tValue = 0;
     private String name;
     private String unknownValue;
     private double finalAnswer;
