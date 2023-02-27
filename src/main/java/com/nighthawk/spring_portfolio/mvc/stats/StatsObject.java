@@ -21,6 +21,7 @@ public class StatsObject {
     private double sampleSize;
     private double standardError;
     private double recentSDM;
+    private double newSampleSize;
     // private double degreesFreedom;
     // private double tailProb;
     // private double zScore;
@@ -50,6 +51,12 @@ public class StatsObject {
         return sdm;
     }
 
+    public void setSampleSize(double newSampleSize) {
+        String typeInp = "Update Sample Size (n = " + sampleSize + " to " + newSampleSize + ")";
+        addCalculation(typeInp, newSampleSize);
+        sampleSize = newSampleSize;
+    }
+
     public Map<String, Double> getHistory() {
         return history;
     }
@@ -67,6 +74,8 @@ public class StatsObject {
         a.calculateSDM(20);
         System.out.println("Sample size: " + a.getN());
         System.out.println("History: " + a.getHistory());
+        a.setSampleSize(20);
+        System.out.println("Updated sample size: " + a.getN());
     }
 }
 
