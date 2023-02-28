@@ -20,6 +20,9 @@ public class CalculatorObject {
 
     private String owner;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @MapKeyColumn(name = "operators")
+    @Column(name = "result")
     private final Map<String, Integer> OPERATORS = new HashMap<>();
     {
         // Map<"token", precedence>
