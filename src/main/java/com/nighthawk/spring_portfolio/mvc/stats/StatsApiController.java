@@ -39,8 +39,8 @@ public class StatsApiController {
         return new ResponseEntity<>( repository.findByowner(getUserName()), HttpStatus.OK);
     }
 
-    @GetMapping("/create/{sampleSize}") 
-    public ResponseEntity<List<StatsObject>> createStatsObject(@PathVariable double sampleSize) {
+    @PostMapping("/create") 
+    public ResponseEntity<List<StatsObject>> createStatsObject(@RequestParam("sampleSize") double sampleSize) {
         // Create new object and save to repo
         String username = getUserName();
         StatsObject a = new StatsObject(sampleSize, username);
@@ -85,4 +85,18 @@ public class StatsApiController {
         repository.delete(a);
         return new ResponseEntity<>(repository.findByowner(getUserName()), HttpStatus.OK);
     }
+
+    @GetMapping("/update/{objectID}/{newSampleSize}")
+    public ResponseEntity<List<StatsObject>> update(@PathVariable int objectID, @PathVariable double newSampleSize) {
+        StatsObject a = repository.findById(objectID).get();
+        // Check if owner matches
+        if (!(a.getOwner().equals(getUserName()))) {
+            return new ResponseEntity<>(repository.findByowner(getUserName()), HttpStatus.BAD_REQUEST);
+        }
+        // Update object from repo
+        a.setSampleSize(newSampleSize);
+        repository.save(a);
+        return new ResponseEntity<>(repository.findByowner(getUserName()), HttpStatus.OK);
+    }
+
 }

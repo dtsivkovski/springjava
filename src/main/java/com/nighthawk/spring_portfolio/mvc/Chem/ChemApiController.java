@@ -66,20 +66,19 @@ public class ChemApiController {
             @RequestParam("volume") double v,
             @RequestParam("molecularWeight") double mw) {
 
-        // int updateChemParam = repository.updateChemParams(m, id);
-        // System.out.println("Updated:" + updateChemParam);
-        /*
-         * Optional<ChemObject> optional = repository.findById(id);
-         * 
-         * if (optional.isPresent()) {
-         * ChemObject c = optional.get();
-         * if (!(c.getOwner().equals(getUserName()))) {
-         * return new ResponseEntity<>(repository.findByOwner(getUserName()),
-         * HttpStatus.BAD_REQUEST);
-         * }
-         * 
-         * }
-         */
+        int updateChemParam = repository.updateChemParams(m, id);
+        System.out.println("Updated:" + updateChemParam);
+        
+        Optional<ChemObject> optional = repository.findById(id);
+        
+        if (optional.isPresent()) {
+        ChemObject c = optional.get();
+        if (!(c.getOwner().equals(getUserName()))) {
+        return new ResponseEntity<>(repository.findByOwner(getUserName()),
+        HttpStatus.BAD_REQUEST);
+        }
+        
+        }
         return new ResponseEntity<>(repository.findByOwner(getUserName()), HttpStatus.OK);
     }
 
