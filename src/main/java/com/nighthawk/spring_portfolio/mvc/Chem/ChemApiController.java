@@ -59,14 +59,14 @@ public class ChemApiController {
 
         return new ResponseEntity<>(repository.findByOwner(getUserName()), HttpStatus.OK);
     }
-
+    /*
     @PostMapping("/update")
     public ResponseEntity<List<ChemObject>> updateChem(@RequestParam("id") int id,
             @RequestParam("mass") double m,
             @RequestParam("volume") double v,
             @RequestParam("molecularWeight") double mw) {
-
-        int updateChemParam = repository.updateChemParams(m, id);
+        
+        int updateChemParam = repository.updateChemParams(m,v,mw,id);
         System.out.println("Updated:" + updateChemParam);
         
         Optional<ChemObject> optional = repository.findById(id);
@@ -80,7 +80,9 @@ public class ChemApiController {
         
         }
         return new ResponseEntity<>(repository.findByOwner(getUserName()), HttpStatus.OK);
+        
     }
+    */
 
     /*
      * @GetMapping("/calculateDensity/{objectID}/{volume}")
