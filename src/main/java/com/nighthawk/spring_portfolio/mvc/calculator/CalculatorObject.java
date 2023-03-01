@@ -61,6 +61,16 @@ public class CalculatorObject {
         return owner;
     }
 
+    public double setFinalAnswer(String expressionInput) {
+        finalAnswer = calculate(expressionInput);
+        return finalAnswer;
+    }
+
+    public String setDouble(String expressionInput) {
+        expression = expressionInput;
+        return expression;
+    }
+
     public void updateOperators(String operator) {
         if (operators.size() == 0) {
             operators.add(operator);
@@ -78,6 +88,8 @@ public class CalculatorObject {
     }
 
     public double calculate(String expression) {
+        tokens.clear();
+        operators.clear();
         for (int i = 0; i < expression.length(); i++) {
             if (expression.charAt(i) != ' ') {
                 if (i == expression.length() - 1) {
@@ -128,10 +140,6 @@ public class CalculatorObject {
     public double calculation() {
         for (int x = 0; x < operators.size(); x++) {
             double computation;
-            for (String token : tokens) {
-                System.out.print(token);
-            }
-            System.out.println("");
             for (int y = 0; y < tokens.size(); y++) {
                 if (tokens.get(y).equals(operators.get(x))) {
                     switch (tokens.get(y)) {

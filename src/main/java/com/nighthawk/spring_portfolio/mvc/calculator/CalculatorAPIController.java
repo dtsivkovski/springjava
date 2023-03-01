@@ -57,7 +57,8 @@ public class CalculatorAPIController {
             return new ResponseEntity<>(a, HttpStatus.BAD_REQUEST);
         }
         // Calculate KE and save to repo
-        a.calculate(expressionInput);
+        a.setFinalAnswer(expressionInput);
+        a.setExpression(expressionInput);
         repository.save(a);
         return new ResponseEntity<>( a, HttpStatus.OK);
     }
