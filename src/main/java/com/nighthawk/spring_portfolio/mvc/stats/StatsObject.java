@@ -21,7 +21,7 @@ public class StatsObject {
     private double sampleSize;
     private double standardError;
     private double recentSDM;
-    private double newSampleSize;
+    // private double newSampleSize;
     // private double degreesFreedom;
     // private double tailProb;
     // private double zScore;
@@ -43,6 +43,7 @@ public class StatsObject {
         history.put(typeinput, result);
     }
 
+    // calculates the standard deviation of the sample distribution of means
     public double calculateSDM(double standardError) {
         double sdm = standardError / Math.sqrt(sampleSize);
         recentSDM = sdm;
@@ -51,11 +52,12 @@ public class StatsObject {
         return sdm;
     }
 
-    public void setSampleSize(double newSampleSize) {
-        String typeInp = "Update Sample Size (n = " + sampleSize + " to " + newSampleSize + ")";
-        addCalculation(typeInp, newSampleSize);
-        sampleSize = newSampleSize;
-    }
+    // public double setSampleSize(double newSampleSize) {
+    //     String typeInp = "Update Sample Size (n = " + sampleSize + " to " + newSampleSize + ")";
+    //     sampleSize = newSampleSize;
+    //     addCalculation(typeInp, newSampleSize);
+    //     return newSampleSize;
+    // }
 
     public Map<String, Double> getHistory() {
         return history;
@@ -65,17 +67,22 @@ public class StatsObject {
         return sampleSize;
     }
 
+    // public double getNewN() {
+    //     return newSampleSize;
+    // }
+
     public void clearHistory() {
         history.clear();
     }
 
+    // Tester method for functions above
     public static void main(String[] args) {
         StatsObject a = new StatsObject(15, "dan@mail");
         a.calculateSDM(20);
         System.out.println("Sample size: " + a.getN());
         System.out.println("History: " + a.getHistory());
-        a.setSampleSize(20);
-        System.out.println("Updated sample size: " + a.getN());
+        // a.setSampleSize(20);
+        // System.out.println("Updated sample size: " + a.getNewN());
     }
 }
 
