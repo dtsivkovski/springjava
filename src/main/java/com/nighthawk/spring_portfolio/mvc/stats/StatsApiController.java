@@ -39,6 +39,7 @@ public class StatsApiController {
         return new ResponseEntity<>( repository.findByowner(getUserName()), HttpStatus.OK);
     }
 
+    // POST method to create object
     @PostMapping("/create") 
     public ResponseEntity<List<StatsObject>> createStatsObject(@RequestParam("sampleSize") double sampleSize) {
         // Create new object and save to repo
@@ -48,6 +49,7 @@ public class StatsApiController {
         return new ResponseEntity<>( repository.findByowner(username), HttpStatus.OK);
     }
 
+    // GET methods for everything else
     @GetMapping("/calculateSDM/{objectID}/{standardError}")
     public ResponseEntity<StatsObject> calculateSDM(@PathVariable int objectID, @PathVariable double standardError) {
         StatsObject a = repository.findById(objectID).get();
