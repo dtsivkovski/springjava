@@ -71,17 +71,21 @@ public class CalculatorObject {
         return expression;
     }
 
-    public void updateOperators(String operator) {
-        if (operators.size() == 0) {
-            operators.add(operator);
-        } else {
-            for (int i = 0; i < operators.size(); i++) {
-                if (OPERATORS.get(operator) < OPERATORS.get(operators.get(i))) {
-                    operators.add(i, operator);
-                    break;
-                } else if (i == operators.size() - 1) {
-                    operators.add(i, operator);
-                    break;
+    public void updateOperators(ArrayList<String> tokensInput) {
+        for (int i = 0; i < tokensInput.size(); i++) {
+            if (OPERATORS.get(tokensInput.get(i)) != null) {
+                if (operators.size() == 0) {
+                    operators.add(tokensInput.get(i));
+                } else {
+                    for (int j = 0; j < operators.size(); j++) {
+                        if (OPERATORS.get(tokensInput.get(i)) < OPERATORS.get(operators.get(j))) {
+                            operators.add(j, tokensInput.get(i));
+                            break;
+                        } else if (j == operators.size() - 1) {
+                            operators.add(tokensInput.get(i));
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -101,7 +105,7 @@ public class CalculatorObject {
                             for (int j = i + 1; j < expression.length(); j++) {
                                 if (expression.charAt(j) == ' ' || OPERATORS.get(expression.substring(j, j+1)) != null) {
                                     tokens.add(expression.substring(i, j));
-                                    i = j;
+                                    i = j - 1;
                                     break;
                                 } else if (j == expression.length() - 1) {
                                     tokens.add(expression.substring(i, j + 1));
@@ -112,8 +116,7 @@ public class CalculatorObject {
                             for (int j = i; j < expression.length(); j++) {
                                 if (expression.charAt(j) == ' ' || OPERATORS.get(expression.substring(j, j+1)) == null) {
                                     tokens.add(expression.substring(i, j));
-                                    updateOperators(expression.substring(i, j));
-                                    i = j;
+                                    i = j - 1;
                                     break;
                                 }
                             }
@@ -122,7 +125,7 @@ public class CalculatorObject {
                         for (int x = i; x < expression.length(); x++) {
                             if (expression.charAt(x) == ' ' || OPERATORS.get(expression.substring(x, x+1)) != null) {
                                 tokens.add(expression.substring(i, x));
-                                i = x;
+                                i = x - 1;
                                 break;
                             } else if (x == expression.length() - 1) {
                                 tokens.add(expression.substring(i, x + 1));
@@ -133,6 +136,8 @@ public class CalculatorObject {
                 }
             }
         }
+
+        updateOperators(tokens);
 
         return calculation();
     }
@@ -195,13 +200,13 @@ public class CalculatorObject {
                 }
             }
         }
-
+        
         finalAnswer = Double.parseDouble(tokens.get(0));
         return finalAnswer;
     }
 
     public static void main(String[] args) {
-        CalculatorObject test = new CalculatorObject("7 + 8 * 6", "test");
+        CalculatorObject test = new CalculatorObject("1 + 2 * 2", "test");
         System.out.println(test);
         System.out.println(test.finalAnswer);
     }
