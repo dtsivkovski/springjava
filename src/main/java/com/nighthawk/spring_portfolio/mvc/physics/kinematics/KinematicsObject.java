@@ -158,6 +158,6 @@ public class KinematicsObject {
     public static void main(String[] args) {
         KinematicsObject test = new KinematicsObject("Test", "test");
         System.out.println(test);
-        System.out.println(test.calculateKinematics(0, true, 0, false, -1.67, true, -1.4, true, 0, false, "Time"));
+        System.out.println(test.calculateKinematics(0, true, 0, false, 0, false, 110, true, 5.21, true, "Time"));
     }
 }

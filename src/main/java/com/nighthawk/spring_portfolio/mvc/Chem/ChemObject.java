@@ -53,8 +53,10 @@ public class ChemObject {
         this.mole = calculateMole(moleW);
 
     }
+    /* 
+    public void updateChemParams(doouble mass, double volume, double moleW, )
 
-    /*
+    
      * // Puts calculations in
      * public void addCalculation(String typeinput, double result) {
      * history.put(typeinput, result);
@@ -79,6 +81,8 @@ public class ChemObject {
         // addCalculation(typeInp, mole);
         return mole;
     }
+
+    
 
     public String toString() {
         return ("{ \"Mass\":" + this.mass +
